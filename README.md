@@ -22,8 +22,8 @@ The first step is to clone this Github repository to your local machine.
 
 Open a terminal.
 
-	git clone "http://"
-	cd MEDOC_medline_downloader_contrivance
+	git clone "https://github.com/MrMimic/medoc_medline_downloading_contrivance"
+	cd medoc_medline_downloading_contrivance
 
 ### Setup
 
