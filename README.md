@@ -1,4 +1,4 @@
-# MEDOC (MEdline DOwnloaded Contrivance)
+# MEDOC (MEdline DOwnloading Contrivance)
 
 
 ## About
