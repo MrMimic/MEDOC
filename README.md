@@ -83,3 +83,25 @@ Indexing a file with 30K article take some time and RAM. Try to open the functio
 	soup = BeautifulSoup(file_content, 'lxml')
 	
 Change '_lxml_' to '_html-parser_' and re-launch SETUP.py
+	
+## Specificities
+
+__Project__: MEDOC (MEdline DOwnloading Contrivance)
+
+__Project webpage__: https://github.com/MrMimic/medoc_medline_downloading_contrivance
+
+__Operating system__: Independent
+
+__Programming language__: Python 3
+
+__External requirements__: Cython (0.25.2), pymysql (0.7.11), bs4 (4-4.6.0), lxml (3.8.0)
+
+__Output data__: mySQL database cloning MEDLINE
+
+__Output format__: SQL
+
+__License__: None
+
+__Restrictions on use__: None
+	
+
