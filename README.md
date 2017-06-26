@@ -7,7 +7,7 @@
 
 [Pubmed](https://www.ncbi.nlm.nih.gov/pubmed/) is the web interface used to query the NIH's database [MEDLINE](https://www.nlm.nih.gov/bsd/pmresources.html).
 
-MEDLINE contains journal citations and abstracts for biomedical literature from around the world (More than 20M).
+MEDLINE contains journal citations and abstracts for biomedical literature from around the world (More than 27M).
 
 They provide free APIs to build automatic queries, however a relational database could be more efficient.
 
