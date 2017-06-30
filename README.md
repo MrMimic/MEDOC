@@ -7,7 +7,7 @@
 
 [Pubmed](https://www.ncbi.nlm.nih.gov/pubmed/) is the web interface used to query the NIH's database [MEDLINE](https://www.nlm.nih.gov/bsd/pmresources.html).
 
-MEDLINE contains journal citations and abstracts for biomedical literature from around the world (More than 27M).
+MEDLINE contains journal citations and abstracts for biomedical literature from around the world (More than 20M).
 
 They provide free APIs to build automatic queries, however a relational database could be more efficient.
 
@@ -22,8 +22,8 @@ The first step is to clone this Github repository to your local machine.
 
 Open a terminal.
 
-	git clone "https://github.com/MrMimic/medoc_medline_downloading_contrivance"
-	cd medoc_medline_downloading_contrivance
+	git clone "http://"
+	cd MEDOC_medline_downloader_contrivance
 
 ### Setup
 
@@ -72,7 +72,13 @@ Then, a regular output for a file loading should look like:
 	30000 articles inserted for file baseline/medline17n0216.xml.gz
 	Total time for file medline17n0216.xml.gz: 5.29 min
 
+### After it finish
 
+INDEX DATABASE
+
+ADD PRIMARY AND FOREIGN KEYS
+
+SUB N/A BY NULL
 
 ## Issues
 
@@ -83,25 +89,10 @@ Indexing a file with 30K article take some time and RAM. Try to open the functio
 	soup = BeautifulSoup(file_content, 'lxml')
 	
 Change '_lxml_' to '_html-parser_' and re-launch SETUP.py
-	
-## Specificities
 
-__Project__: MEDOC (MEdline DOwnloading Contrivance)
 
-__Project webpage__: https://github.com/MrMimic/medoc_medline_downloading_contrivance
 
-__Operating system__: Independent
 
-__Programming language__: Python 3
 
-__External requirements__: Cython (0.25.2), pymysql (0.7.11), bs4 (4-4.6.0), lxml (3.8.0)
 
-__Output data__: mySQL database cloning MEDLINE
-
-__Output format__: SQL
-
-__License__: None
-
-__Restrictions on use__: None
-	
-
+FAIRE LES INDEXS SUR LES TABLES UNE FOIS REMPLIES
