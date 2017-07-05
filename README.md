@@ -3,7 +3,7 @@
 
 ## About
 
-### What is PubMED ?
+### What is MEDLINE ?
 
 [Pubmed](https://www.ncbi.nlm.nih.gov/pubmed/) is the web interface used to query the NIH's database [MEDLINE](https://www.nlm.nih.gov/bsd/pmresources.html).
 
