@@ -95,7 +95,7 @@ Change '_lxml_' to '_html-parser_' and re-launch SETUP.py.
 Or simply try to lower the '_insert_command_limit_' parameter, to insert values more often in the database, thus saving RAM usage.
 
 
-__SQL insertions are taking really a lot of time (more than 15min / file)'__
+__SQL insertions are taking really a lot of time (more than 15min / file)__
 
 Recreate the SQL database after dropping it.
 
