@@ -5,13 +5,11 @@
 
 ### What is MEDLINE ?
 
-[Pubmed](https://www.ncbi.nlm.nih.gov/pubmed/) is the web interface used to query the NIH's database [MEDLINE](https://www.nlm.nih.gov/bsd/pmresources.html).
+[MEDLINE](https://www.nlm.nih.gov/bsd/pmresources.html) is a database of scientitifc articles released by the NIH.[Pubmed](https://www.ncbi.nlm.nih.gov/pubmed/) is the most common way to query this database, used daily by many scientists around the world.
 
-MEDLINE contains journal citations and abstracts for biomedical literature from around the world (More than 20M).
+The NIH provides free APIs to build automatic queries, however a relational database could be more efficient.
 
-They provide free APIs to build automatic queries, however a relational database could be more efficient.
-
-The aim of this project is to download XML files provided by MEDLINE on their FTP and to build a relational mySQL database with their content.
+The aim of this project is to download XML files provided by MEDLINE on a FTP and to build a relational mySQL database with their content.
 
 
 ## Launch
@@ -22,12 +20,12 @@ The first step is to clone this Github repository to your local machine.
 
 Open a terminal.
 
-	git clone "http://"
-	cd MEDOC_medline_downloader_contrivance
+	git clone "https://github.com/MrMimic/MEDOC"
+	cd ./MEDOC
 
 ### Setup
 
-The first step is to install external dependencies and to cythonize python functions.
+The second step is to install external dependencies and to cythonize python functions.
 
 Thus, run the file *SETUP.py*
 
@@ -41,17 +39,19 @@ This script will:
 * Check for bs4 and give command to install it
 * Build .so and .c files for cython functions
 
+
 ### Launch the programm
 
 Open file 'parameters.json' and change complete path value including your /home/xxx/...
 
-If your computer has 16Go or more of RAM, you can set '_insert_command_limit_' to '1000'.
+If your computer has 16Go or more of RAM, you can set '_insert_command_limit_' to '1000' of greater.
 
 Leave database name to '_pubmed_' but change the mySQL password to yours.
 
 Then, simply execute :
 
 	python3 file_execution.py 
+
 	
 ### Output
 
@@ -72,6 +72,7 @@ Then, a regular output for a file loading should look like:
 	30000 articles inserted for file baseline/medline17n0216.xml.gz
 	Total time for file medline17n0216.xml.gz: 5.29 min
 
+
 ### After it finish
 
 INDEX DATABASE
@@ -79,6 +80,7 @@ INDEX DATABASE
 ADD PRIMARY AND FOREIGN KEYS
 
 SUB N/A BY NULL
+
 
 ## Issues
 
@@ -88,11 +90,17 @@ Indexing a file with 30K article take some time and RAM. Try to open the functio
 
 	soup = BeautifulSoup(file_content, 'lxml')
 	
-Change '_lxml_' to '_html-parser_' and re-launch SETUP.py
+Change '_lxml_' to '_html-parser_' and re-launch SETUP.py.
+
+Or simply try to lower the '_insert_command_limit_' parameter, to insert values more often in the database, thus saving RAM usage.
 
 
+__SQL insertions are taking really a lot of time (more than 15min / file)'__
 
+Recreate the SQL database after dropping it.
 
+	DROP DATABASE pubmed ;
+	
+However, comment every line about indexes (_CREATE INDEX_) or foreigns keys (_ALTER TABLE_) into the SQL creation file. Indexes are slowing up insertions.
 
-
-FAIRE LES INDEXS SUR LES TABLES UNE FOIS REMPLIES
+When the database is full, launch the indexes and alter commands one by one.
