@@ -1,0 +1,28 @@
+{
+	"database": {
+		
+		"path_to_sql": "/home/XXX/MEDOC/pudmed_data/database_creation.sql",
+		
+		"user": "root",
+		
+		"password": "YOUR_SQL_SERVER_PASSWORD",
+		
+		"host": "localhost",
+		
+		"database": "pubmed",
+		
+		"insert_command_limit": 750
+		
+	},
+	"paths": {
+		
+		"program_path": "/home/XXX/MEDOC",
+		
+		"pubmed_data_download": "/home/XXX/MEDOC/pudmed_data/",
+		
+		"sql_error_log": "/home/XXX/MEDOC/pudmed_data/errors.log",
+		
+		"already_downloaded_files": "/home/XXX/MEDOC/pudmed_data/inserted.log"
+		
+	}
+}
