@@ -50,7 +50,7 @@ Leave database name to '_pubmed_' but change the mySQL password to yours.
 
 Then, simply execute :
 
-	__execution__.py
+	python3 __execution__.py
 
 	
 ### Output
