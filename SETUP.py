@@ -1,3 +1,4 @@
+# To execute this file, please launch
 # python3 SETUP.py build_ext --inplace
 
 ''' External dependencies '''
