@@ -1,11 +1,11 @@
 {
 	"database": {
 		
-		"path_to_sql": "/home/XXX/MEDOC/pudmed_data/database_creation.sql",
+		"path_to_sql": "./NEW_one_line_create_pubmed.sql",
 		
 		"user": "root",
 		
-		"password": "YOUR_SQL_SERVER_PASSWORD",
+		"password": "9326995&mEr1(",
 		
 		"host": "localhost",
 		
@@ -16,13 +16,13 @@
 	},
 	"paths": {
 		
-		"program_path": "/home/XXX/MEDOC",
+		"program_path": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor",
 		
-		"pubmed_data_download": "/home/XXX/MEDOC/pudmed_data/",
+		"pubmed_data_download": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/pudmed_data/",
 		
-		"sql_error_log": "/home/XXX/MEDOC/pudmed_data/errors.log",
+		"sql_error_log": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/errors.log",
 		
-		"already_downloaded_files": "/home/XXX/MEDOC/pudmed_data/inserted.log"
+		"already_downloaded_files": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/inserted.log"
 		
 	}
 }

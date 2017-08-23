@@ -50,7 +50,7 @@ Leave database name to '_pubmed_' but change the mySQL password to yours.
 
 Then, simply execute :
 
-	python3 __execution__.py
+	python3 file_execution.py 
 
 	
 ### Output
@@ -86,9 +86,7 @@ SUB N/A BY NULL
 
 __Program stop running because of 'Segmentation fault (core dumped)'__
 
-Indexing a file with 30K article take some time and RAM. 
-
-Try to open the function _/lib_medline/python_functions/E_parse_xml.py_ and go to the line:
+Indexing a file with 30K article take some time and RAM. Try to open the function _/lib_medline/python_functions/E_parse_xml.py_ and go to the line:
 
 	soup = BeautifulSoup(file_content, 'lxml')
 	
@@ -97,12 +95,12 @@ Change '_lxml_' to '_html-parser_' and re-launch SETUP.py.
 Or simply try to lower the '_insert_command_limit_' parameter, to insert values more often in the database, thus saving RAM usage.
 
 
-__SQL insertions are taking really a lot of time (more than 15min / file)__
+__SQL insertions are taking really a lot of time (more than 15min / file)'__
 
 Recreate the SQL database after dropping it.
 
 	DROP DATABASE pubmed ;
 	
-However, comment every line about indexes (_CREATE INDEX_) into the SQL creation file. Indexes are slowing up insertions.
+However, comment every line about indexes (_CREATE INDEX_) or foreigns keys (_ALTER TABLE_) into the SQL creation file. Indexes are slowing up insertions.
 
 When the database is full, launch the indexes and alter commands one by one.
