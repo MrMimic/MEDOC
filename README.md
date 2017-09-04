@@ -1,5 +1,7 @@
 # MEDOC (MEdline DOwnloading Contrivance)
 
+More information on:
+
 https://omictools.com/medline-downloading-contrivance-tool
 
 ## About
