@@ -104,6 +104,6 @@ Recreate the SQL database after dropping it.
 
 	DROP DATABASE pubmed ;
 	
-However, comment every line about indexes (_CREATE INDEX_) or foreigns keys (_ALTER TABLE_) into the SQL creation file. Indexes are slowing up insertions.
+Then, comment every line about indexes (_CREATE INDEX_) or foreigns keys (_ALTER TABLE_) into the SQL creation file. Indexes are slowing up insertions.
 
 When the database is full, launch the indexes and alter commands once at a time.
