@@ -1,6 +1,6 @@
 # MEDOC (MEdline DOwnloading Contrivance)
 
-More information about MEDOC on OMICTools website and on MEDOC's publication:
+More information about MEDOC on OMICTools website and on MEDOC's publication on arXiv:
 
 https://omictools.com/medline-downloading-contrivance-tool
 
