@@ -2,9 +2,9 @@
 
 More information about MEDOC on OMICTools website and on MEDOC's publication on arXiv:
 
-https://arxiv.org/abs/1710.06590
+* https://arxiv.org/abs/1710.06590
 
-https://omictools.com/medline-downloading-contrivance-tool
+* https://omictools.com/medline-downloading-contrivance-tool
 
 ## About
 
