@@ -2,11 +2,9 @@
 
 
 #  Standart libraries
-import os
 import re
 import json
 import time
-import pymysql.cursors
 
 #  Custom libraries
 import sys
