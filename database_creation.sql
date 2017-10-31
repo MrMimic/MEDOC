@@ -100,16 +100,16 @@ CREATE INDEX idx_invest_pmid on medline_investigator(pmid);
 #=============================================================
 # Set permissions and volatile cardinality 
 #=============================================================
-GRANT ALL PRIVILEGES ON TABLE medline_citation TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_author TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_chemical_list TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_mesh_heading TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_comments_corrections TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_citation_subsets TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_article_publication_type TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_article_language TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_grant TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_data_bank TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_personal_name_subject TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_citation_other_id TO 'db_user'@'*' identified by 'DB_PASSWORD';
-GRANT ALL PRIVILEGES ON TABLE medline_investigator TO 'db_user'@'*' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_citation TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_author TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_chemical_list TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_mesh_heading TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_comments_corrections TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_citation_subsets TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_article_publication_type TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_article_language TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_grant TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_data_bank TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_personal_name_subject TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_citation_other_id TO 'db_user'@'%' identified by 'DB_PASSWORD';
+GRANT ALL PRIVILEGES ON TABLE medline_investigator TO 'db_user'@'%' identified by 'DB_PASSWORD';
