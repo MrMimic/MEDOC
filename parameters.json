@@ -2,7 +2,7 @@
 	"database": {
 		"path_to_sql": "./database_creation.sql",
 		"user": "root",
-		"password": "",
+		"password": "password",
 		"host": "localhost",
 		"port": 3306,
 		"database": "pubmed",

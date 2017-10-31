@@ -8,7 +8,6 @@ sql_connection = None
 last_write_access = None
 
 
-
 def __config_file_changed__(filename='parameters.json'):
     """
     Tells if the config file has been altered recently
@@ -33,8 +32,6 @@ def __read_json_parameter__(filename='parameters.json'):
     :return: 
     """
     full_path = os.path.join(__ROOT_FOLDER__, filename)
-    print(os.path.exists(full_path))
-    print(os.path.abspath('.'))
     if not os.path.exists(full_path):
         raise Exception('File %s not found' % full_path)
 
@@ -52,7 +49,7 @@ def __read_json_parameter__(filename='parameters.json'):
 
 def get_sequel_connection():
     """
-    Retrieve or instanciate a connection to the DB
+    Retrieve or instantiate a connection to the DB
     :return: 
     """
     global sql_connection

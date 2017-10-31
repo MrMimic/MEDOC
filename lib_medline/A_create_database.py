@@ -9,35 +9,36 @@ parameters = json.load(parameters_json)
 
 
 def create_pubmedDB(parameters):
-    print('- ' * 30 + 'PUBMED DATABASE CREATION')
+    db_name = parameters['database']['database']
+    print('- ' * 30 + '%s DATABASE CREATION' % db_name)
     #  Timestamp
     start_time = time.time()
     #  mySQL connexion
     connection = db_util.get_sequel_connection()
     cursor = connection.cursor()
-    #  Check if 'pubmed' db exists, if not, create it by executing SQL file line by line
+    #  Check if db exists, if not, create it by executing SQL file line by line
     cursor.execute('SHOW DATABASES ;')
     local_dbNames = []
     for row in cursor:
         local_dbNames.append(row['Database'])
-    if 'pubmed' in local_dbNames:
-        cursor.execute('USE pubmed ;')
+    if db_name in local_dbNames:
+        cursor.execute('USE %s ;' % db_name)
         cursor.execute('SHOW TABLES ;')
-        print('Database pubmed already created with tables :')
+        print('Database %s already created with tables :' % db_name)
         for row in cursor:
-            print('\t- {}'.format(row['Tables_in_pubmed']))
+            print('\t- {}'.format(row['Tables_in_%s' % db_name]))
     else:
-        print('Database pubmed doesn\'t exist. Creation ..')
-        cursor.execute('CREATE DATABASE pubmed ;')
-        cursor.execute('USE pubmed ;')
+        print('Database %s doesn\'t exist. Creation ..' % db_name)
+        cursor.execute('CREATE DATABASE %s ;' % db_name)
+        cursor.execute('USE %s ;' % db_name)
         print('Sourcing file {}'.format(parameters['database']['path_to_sql']))
         for command in open(parameters['database']['path_to_sql'], 'r'):
             if command is not None and command.strip() != '':
                 cursor.execute(command)
-        print('Database Pubmed created with tables :')
+        print('Database %s created with tables :' % db_name)
         cursor.execute('SHOW TABLES ;')
         for row in cursor:
-            print('\t- {}'.format(row['Tables_in_pubmed']))
+            print('\t- {}'.format(row['Tables_in_%s' % db_name]))
 
     print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2), create_pubmedDB.__name__))
 
