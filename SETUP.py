@@ -38,8 +38,8 @@ from Cython.Build import cythonize
 import os
 
 setup(
-	ext_modules = cythonize('lib_medline/python_functions/*.py'),
+	ext_modules = cythonize('lib_medline/*.py'),
 )
 
 os.system('mv *.so lib_medline/')
-os.system('mv lib_medline/python_functions/*.c lib_medline/')
+os.system('mv lib_medline/*.c lib_medline/')
