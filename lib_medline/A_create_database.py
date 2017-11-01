@@ -29,7 +29,7 @@ def create_pubmedDB(parameters):
             print('\t- {}'.format(row['Tables_in_%s' % db_name]))
     else:
         print('Database %s doesn\'t exist. Creation ..' % db_name)
-        cursor.execute('CREATE DATABASE %s ;' % db_name)
+        cursor.execute('CREATE DATABASE %s DEFAULT CHARACTER SET utf8mb4  DEFAULT COLLATE utf8mb4_unicode_ci ;' % db_name)
         cursor.execute('USE %s ;' % db_name)
         print('Sourcing file {}'.format(parameters['database']['path_to_sql']))
         for command in open(parameters['database']['path_to_sql'], 'r'):
