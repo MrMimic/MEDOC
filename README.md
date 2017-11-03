@@ -6,6 +6,7 @@ More information about MEDOC on OMICTools website and on MEDOC's publication on 
 
 * https://omictools.com/medline-downloading-contrivance-tool
 
+
 ## About
 
 ### What is MEDLINE ?
@@ -77,14 +78,6 @@ Then, a regular output for a file loading should look like:
 	30000 articles inserted for file baseline/medline17n0216.xml.gz
 	Total time for file medline17n0216.xml.gz: 5.29 min
 
-
-### After it finish
-
-INDEX DATABASE
-
-ADD PRIMARY AND FOREIGN KEYS
-
-SUB N/A BY NULL
 
 
 ## Issues

@@ -32,7 +32,7 @@ except:
 print('sudo pip3 install -U lxml')
 
 ''' Cythonizer '''
-		
+
 from distutils.core import setup
 from Cython.Build import cythonize
 import os
