@@ -43,7 +43,8 @@ This script will:
 * Check for Cython and give command to install it
 * Check for pymysql and give command to install it
 * Check for bs4 and give command to install it
-* Build .so and .c files for cythonized functions
+
+There's no need to Cythonize functions anymore, they've been optimized.
 
 
 ### Launch the programm
