@@ -96,7 +96,7 @@ Or simply try to lower the '_insert_command_limit_' parameter, to insert values 
 
 __SQL insertions are taking really a lot of time (more than 15min / file)'__
 
-Recreate the SQL database after dropping it.
+Recreate the SQL database after dropping it, by running the following command:
 
 	DROP DATABASE pubmed ;
 	
