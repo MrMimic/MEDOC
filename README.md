@@ -1,10 +1,11 @@
 # MEDOC (MEdline DOwnloading Contrivance)
 
-More information about MEDOC on OMICTools website and on MEDOC's publication on arXiv:
+More information about MEDOC on OMICTools website or on MEDOC's publication on arXiv.org:
 
 * https://arxiv.org/abs/1710.06590
 
 * https://omictools.com/medline-downloading-contrivance-tool
+
 
 ## About
 
@@ -42,7 +43,8 @@ This script will:
 * Check for Cython and give command to install it
 * Check for pymysql and give command to install it
 * Check for bs4 and give command to install it
-* Build .so and .c files for cythonized functions
+
+There's no need to Cythonize functions anymore, they've been optimized.
 
 
 ### Launch the programm
@@ -78,14 +80,6 @@ Then, a regular output for a file loading should look like:
 	Total time for file medline17n0216.xml.gz: 5.29 min
 
 
-### After it finish
-
-INDEX DATABASE
-
-ADD PRIMARY AND FOREIGN KEYS
-
-SUB N/A BY NULL
-
 
 ## Issues
 
@@ -102,7 +96,7 @@ Or simply try to lower the '_insert_command_limit_' parameter, to insert values 
 
 __SQL insertions are taking really a lot of time (more than 15min / file)'__
 
-Recreate the SQL database after dropping it.
+Recreate the SQL database after dropping it, by running the following command:
 
 	DROP DATABASE pubmed ;
 	
