@@ -55,10 +55,22 @@ This script will:
 
 There's no need to Cythonize functions anymore, they've been optimized.
 
-####
-Alternatively you can exploit the requirements.txt file shipped with the project.
+**Alternatively** you can exploit the requirements.txt file shipped with the project.
 Simply run the following command from the MEDOC folder.
 > pip3 install -r requirements.txt
+
+#### Configuration
+Before you can run the code, you should take a look at `parameters.json` file and customize it according to your 
+environment.
+
+Plus, if you have already a user to access the DB you wish to create you can change the `schema` file to reflect that.
+You can change the DB_USER and the DB_PASSWORD fields with the following command.
+Suppose your credentials are: my_custom_user/my_secret_password
+```bash
+export MEDOC_SQL_FILE='database_creation.sql'
+sed -i'' -e "s/\bdb_user\b/my_custom_user/g" $MEDOC_SQL_FILE
+sed -i'' -e "s/\bDB_PASSWORD\b/my_secret_password/g" $MEDOC_SQL_FILE
+```
 
 NOTE: If python3 is your default, you do not need to specify `python3` or `pip3` but just use `python` and `pip`.
 ### Launch the programm
