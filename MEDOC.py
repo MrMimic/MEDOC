@@ -31,11 +31,13 @@ class MEDOC(object):
 
     def create_pubmedDB(self):
         print('- ' * 30 + 'DATABASE CREATION')
+        wished_schema_name = self.parameters['database']['database']
         #  Timestamp
         start_time = time.time()
         #  mySQL connexion
         connection = pymysql.connect(
             host=self.parameters['database']['host'],
+            port=self.parameters['database']['port'],
             user=self.parameters['database']['user'],
             password=self.parameters['database']['password'],
             cursorclass=pymysql.cursors.DictCursor,
@@ -46,24 +48,24 @@ class MEDOC(object):
         local_dbNames = []
         for row in cursor:
             local_dbNames.append(row['Database'])
-        if 'pubmed' in local_dbNames:
-            cursor.execute('USE pubmed ;')
+        if wished_schema_name in local_dbNames:
+            cursor.execute('USE %s ;' % wished_schema_name)
             cursor.execute('SHOW TABLES ;')
-            print('Database pubmed already created with tables :')
+            print('Database %s already created with tables: ' % wished_schema_name)
             for row in cursor:
-                print('\t- {}'.format(row['Tables_in_pubmed']))
+                print('\t- {}'.format(row['Tables_in_%s' % wished_schema_name]))
         else:
-            print('Database pubmed doesn\'t exist. Creation ..')
-            cursor.execute('CREATE DATABASE pubmed ;')
-            cursor.execute('USE pubmed ;')
+            print('Database %s doesn\'t exist. Creation ..' % wished_schema_name)
+            cursor.execute('CREATE DATABASE %s ;' % wished_schema_name)
+            cursor.execute('USE %s ;' % wished_schema_name)
             print('Sourcing file {}'.format(self.parameters['database']['path_to_sql']))
             for command in open(self.parameters['database']['path_to_sql'], 'r'):
                 if command != '\n' and not command.startswith('#'):
                     cursor.execute(command)
-            print('Database Pubmed created with tables :')
+            print('Database %s created with tables: ' % wished_schema_name)
             cursor.execute('SHOW TABLES ;')
             for row in cursor:
-                print('\t- {}'.format(row['Tables_in_pubmed']))
+                print('\t- {}'.format(row['Tables_in_%s' % wished_schema_name]))
 
         print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2),
                                                            MEDOC.create_pubmedDB.__name__))
