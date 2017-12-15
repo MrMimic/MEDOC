@@ -30,7 +30,16 @@ Open a terminal.
 	cd ./MEDOC
 
 ### Setup
+Here prerequisites and installation procedures will be discussed.
 
+#### Prerequisites 
+XML parsing libraries may be needed. You can install them on any Debian-derived system with:
+> sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+
+You may also need `python-dev`. You can also install it with the same command:
+> sudo apt-get install python-dev
+
+#### Installation
 The second step is to install external dependencies and to cythonize python functions.
 
 Thus, run the file *SETUP.py*
@@ -46,7 +55,12 @@ This script will:
 
 There's no need to Cythonize functions anymore, they've been optimized.
 
+####
+Alternatively you can exploit the requirements.txt file shipped with the project.
+Simply run the following command from the MEDOC folder.
+> pip3 install -r requirements.txt
 
+NOTE: If python3 is your default, you do not need to specify `python3` or `pip3` but just use `python` and `pip`.
 ### Launch the programm
 
 Open file 'parameters.json' and change complete path value including your /home/xxx/...
@@ -57,7 +71,7 @@ Leave database name to '_pubmed_' but change the mySQL password to yours.
 
 Then, simply execute :
 
-	python3 file_execution.py 
+	python3 __execution__.py 
 
 	
 ### Output
