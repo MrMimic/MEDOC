@@ -95,4 +95,8 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# PyCharm project folder
 .idea/
+
+# Log folder
+19_pubmed_sql_extractor/

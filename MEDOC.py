@@ -58,7 +58,8 @@ class MEDOC(object):
             cursor.execute('USE pubmed ;')
             print('Sourcing file {}'.format(self.parameters['database']['path_to_sql']))
             for command in open(self.parameters['database']['path_to_sql'], 'r'):
-                cursor.execute(command)
+                if command != '\n' and not command.startswith('#'):
+                    cursor.execute(command)
             print('Database Pubmed created with tables :')
             cursor.execute('SHOW TABLES ;')
             for row in cursor:
