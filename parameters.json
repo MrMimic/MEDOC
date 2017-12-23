@@ -1,28 +1,17 @@
 {
 	"database": {
-		
-		"path_to_sql": "./NEW_one_line_create_pubmed.sql",
-		
+		"path_to_sql": "./database_creation.sql",
 		"user": "root",
-		
 		"password": "XXX",
-		
 		"host": "localhost",
-		
+		"port": 3306,
 		"database": "pubmed",
-		
 		"insert_command_limit": 750
-		
 	},
 	"paths": {
-		
 		"program_path": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor",
-		
 		"pubmed_data_download": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/pudmed_data/",
-		
 		"sql_error_log": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/errors.log",
-		
 		"already_downloaded_files": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/inserted.log"
-		
 	}
 }

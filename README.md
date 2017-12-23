@@ -30,7 +30,16 @@ Open a terminal.
 	cd ./MEDOC
 
 ### Setup
+Here prerequisites and installation procedures will be discussed.
 
+#### Prerequisites 
+XML parsing libraries may be needed. You can install them on any Debian-derived system with:
+> sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+
+You may also need `python-dev`. You can also install it with the same command:
+> sudo apt-get install python-dev
+
+#### Installation
 The second step is to install external dependencies and to cythonize python functions.
 
 Thus, run the file *SETUP.py*
@@ -46,7 +55,24 @@ This script will:
 
 There's no need to Cythonize functions anymore, they've been optimized.
 
+**Alternatively** you can exploit the requirements.txt file shipped with the project.
+Simply run the following command from the MEDOC folder.
+> pip3 install -r requirements.txt
 
+#### Configuration
+Before you can run the code, you should take a look at `parameters.json` file and customize it according to your 
+environment.
+
+Plus, if you have already a user to access the DB you wish to create you can change the `schema` file to reflect that.
+You can change the DB_USER and the DB_PASSWORD fields with the following command.
+Suppose your credentials are: my_custom_user/my_secret_password
+```bash
+export MEDOC_SQL_FILE='database_creation.sql'
+sed -i'' -e "s/\bdb_user\b/my_custom_user/g" $MEDOC_SQL_FILE
+sed -i'' -e "s/\bDB_PASSWORD\b/my_secret_password/g" $MEDOC_SQL_FILE
+```
+
+NOTE: If python3 is your default, you do not need to specify `python3` or `pip3` but just use `python` and `pip`.
 ### Launch the programm
 
 Open file 'parameters.json' and change complete path value including your /home/xxx/...
@@ -57,7 +83,7 @@ Leave database name to '_pubmed_' but change the mySQL password to yours.
 
 Then, simply execute :
 
-	python3 file_execution.py 
+	python3 __execution__.py 
 
 	
 ### Output
@@ -103,3 +129,9 @@ Recreate the SQL database after dropping it, by running the following command:
 Then, comment every line about indexes (_CREATE INDEX_) or foreigns keys (_ALTER TABLE_) into the SQL creation file. Indexes are slowing up insertions.
 
 When the database is full, launch the indexes and alter commands once at a time.
+
+__Problem installing lxml__
+Make sure you have all the right dependencies installed
+On Debian based machines try running:
+> sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev
+
