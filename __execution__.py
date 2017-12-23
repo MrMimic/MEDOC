@@ -15,11 +15,13 @@
 #  Standart libraries
 import os
 import re
+import sys
 import json
 import time
 import pymysql.cursors
 
 #  Custom libraries
+sys.path.append('./lib')
 import MEDOC
 import getters
 
@@ -229,12 +231,7 @@ if __name__ == '__main__':
 
             ''' Step H: remove file and add file_name to a list to ignore this file next time '''
             MEDOC.remove(file_name=file_to_download)
-            time_file = open('../time.txt', 'a')
-            time_file.write(
-                'Total time for file {}: {} min\n'.format(file_to_download, round((time.time() - start_time) / 60, 2)))
-            time_file.close()
-            print(
-                'Total time for file {}: {} min\n'.format(file_to_download, round((time.time() - start_time) / 60, 2)))
+            print('Total time for file {}: {} min\n'.format(file_to_download, round((time.time() - start_time) / 60, 2)))
 
             #  Flush RAM
             del articles;

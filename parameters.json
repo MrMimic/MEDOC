@@ -1,6 +1,6 @@
 {
 	"database": {
-		"path_to_sql": "./database_creation.sql",
+		"path_to_sql": "./utils/database_creation.sql",
 		"user": "root",
 		"password": "XXX",
 		"host": "localhost",
@@ -9,9 +9,9 @@
 		"insert_command_limit": 750
 	},
 	"paths": {
-		"program_path": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor",
-		"pubmed_data_download": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/pudmed_data/",
-		"sql_error_log": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/errors.log",
-		"already_downloaded_files": "/home/emeric/0_Gitlab/scripting/19_pubmed_sql_extractor/inserted.log"
+		"program_path": "/home/emeric/1_Github/MEDOC",
+		"pubmed_data_download": "./pudmed_data/",
+		"sql_error_log": "./log/errors.log",
+		"already_downloaded_files": "./log/inserted.log"
 	}
 }
