@@ -18,6 +18,7 @@ import re
 import time
 import gzip
 import json
+import configparser
 from ftplib import FTP
 import pymysql.cursors
 from bs4 import BeautifulSoup
@@ -29,7 +30,9 @@ class MEDOC(object):
 		"""
 		INIT
 		"""
-		self.parameters = json.load(open('./parameters.json'))
+
+		self.parameters = self.config = configparser.ConfigParser()
+		self.parameters.read('./configuration.cfg')
 		self.regex_gz = re.compile('^pubmed.*.xml.gz$')
 		print('\n' * 2)
 
@@ -38,16 +41,17 @@ class MEDOC(object):
 		"""
 		DATABASE CREATION
 		"""
+
 		print('- ' * 30 + 'DATABASE CREATION')
 		wished_schema_name = self.parameters['database']['database']
 		#  Timestamp
 		start_time = time.time()
 		#  mySQL connexion
 		connection = pymysql.connect(
-			host=self.parameters['database']['host'],
-			port=self.parameters['database']['port'],
-			user=self.parameters['database']['user'],
-			password=self.parameters['database']['password'],
+			host=self.parameters.get('database', 'host'),
+			port=self.parameters.getint('database', 'port'),
+			user=self.parameters.get('database', 'user'),
+			password=self.parameters.get('database', 'password'),
 			cursorclass=pymysql.cursors.DictCursor,
 			autocommit=True)
 		cursor = connection.cursor()
@@ -75,8 +79,7 @@ class MEDOC(object):
 			for row in cursor:
 				print('\t- {}'.format(row['Tables_in_%s' % wished_schema_name]))
 
-		print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2),
-															MEDOC.create_pubmedDB.__name__))
+		print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2), MEDOC.create_pubmedDB.__name__))
 		cursor.close()
 		connection.close()
 
@@ -127,8 +130,7 @@ class MEDOC(object):
 				gz_file_list.append(update_file_name)
 
 		print('{} files to download not in your database'.format(len(gz_file_list) - len(inserted_list)))
-		print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2),
-															MEDOC.get_file_list.__name__))
+		print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2), MEDOC.get_file_list.__name__))
 
 		return gz_file_list
 
@@ -151,8 +153,7 @@ class MEDOC(object):
 			print('Downloading {} ..'.format(file_name))
 			ftp_ncbi.retrbinary('RETR {}'.format(file_name_dir[0][1]), file_handle.write)
 			os.chdir(self.parameters['paths']['program_path'])
-			print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2),
-																MEDOC.download.__name__))
+			print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2), MEDOC.download.__name__))
 
 		return file_name_dir[0][1]
 
@@ -189,7 +190,7 @@ class MEDOC(object):
 		article_INSERT_list = []
 		pmid_primary_key = re.findall('<articleid idtype="pubmed">([0-9]*)</articleid>', str(article))
 
-		''' Regexs '''
+		# Regexs
 		r_year = re.compile('<year>([0-9]{4})</year>')
 		r_month = re.compile('<month>([0-9]{2})</month>')
 		r_day = re.compile('<day>([0-9]{2})</day>')
@@ -334,7 +335,7 @@ class MEDOC(object):
 			 'value': {'pmid': pmid_primary_key,
 						'source': re.findall('<otherid source="(.*)">.*</otherid>', str(article)),
 						'other_id': re.findall('<otherid source=".*">(.*)</otherid>', str(article))}
-			 })
+			})
 
 		''' - - - - - - - - - - - - - - 
 		medline_citation_subsets
