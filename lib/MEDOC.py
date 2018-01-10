@@ -354,8 +354,8 @@ class MEDOC(object):
 			article_INSERT_list.append(
 				{'name': 'medline_comments_corrections',
 				 'value': {'pmid': pmid_primary_key,
-							'ref_pmid': re.findall('<pmid version="1">([0-9]{1,4})</pmid>', str(comment)),
-							'type': re.findall('<commentscorrections reftype="(.[A-Za-z])">', str(comment)),
+							'ref_pmid': re.findall('<pmid version="1">(\d+)</pmid>', str(comment)),
+							'type': re.findall('<commentscorrections reftype="(.*?)">', str(comment)),
 							'ref_source': re.findall('<refsource>(.*)</refsource>', str(comment))}
 				 })
 
