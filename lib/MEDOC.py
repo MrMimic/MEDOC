@@ -29,17 +29,19 @@ class MEDOC(object):
         """
 		INIT
 		"""
-
         self.parameters = self.config = configparser.ConfigParser()
         self.parameters.read('./configuration.cfg')
         self.regex_gz = re.compile('^pubmed.*.xml.gz$')
+        self.insert_log_path = os.path.join(self.parameters['paths']['program_path'],
+                                       self.parameters['paths']['already_downloaded_files'])
+        self.download_folder = os.path.join(self.parameters['paths']['program_path'],
+                                            self.parameters['paths']['pubmed_data_download'])
         print('\n' * 2)
 
     def create_pubmedDB(self):
         """
 		DATABASE CREATION
 		"""
-
         print('- ' * 30 + 'DATABASE CREATION')
         wished_schema_name = self.parameters['database']['database']
         #  Timestamp
@@ -87,9 +89,9 @@ class MEDOC(object):
         #  Timestamp
         start_time = time.time()
         #  Create directory to keep file during INSERT
-        if not os.path.exists(self.parameters['paths']['pubmed_data_download']):
-            os.makedirs(self.parameters['paths']['pubmed_data_download'])
-            inserted_log = open(self.parameters['paths']['already_downloaded_files'], 'w')
+        if not os.path.exists(self.download_folder):
+            os.makedirs(self.download_folder)
+            inserted_log = open(self.insert_log_path, 'w')
             inserted_log.close()
         #  List of files to download
         gz_file_list = []
@@ -115,7 +117,7 @@ class MEDOC(object):
                 gz_update.append('updatefiles/' + file_name)
         print('{} files in Medline\'s updates'.format(len(gz_update)))
         #  If already INSERTED before
-        inserted_log = open(self.parameters['paths']['already_downloaded_files'], 'r')
+        inserted_log = open(self.insert_log_path, 'r')
         inserted_list = []
         for inserted_file_name in inserted_log:
             inserted_list.append(inserted_file_name)
@@ -138,7 +140,7 @@ class MEDOC(object):
         #  Timestamp
         start_time = time.time()
         #  Go to storage directory
-        os.chdir(self.parameters['paths']['pubmed_data_download'])
+        os.chdir(self.download_folder)
         #  Connect FTP root
         ftp_ncbi = FTP('ftp.ncbi.nlm.nih.gov')
         ftp_ncbi.login()
@@ -160,7 +162,7 @@ class MEDOC(object):
         print('- ' * 30 + 'FILE EXTRACTION')
         #  Timestamp
         start_time = time.time()
-        os.chdir(self.parameters['paths']['pubmed_data_download'])
+        os.chdir(self.download_folder)
         #  Extraction
         gz_file = gzip.open(file_name, 'rt', encoding='utf-8')
         file_content = gz_file.read()
@@ -456,9 +458,9 @@ class MEDOC(object):
         return article_INSERT_list
 
     def remove(self, file_name):
-        inserted_log = open(self.parameters['paths']['already_downloaded_files'], 'a')
+        inserted_log = open(self.insert_log_path, 'a')
         inserted_log.write('{}\n'.format(file_name))
         inserted_log.close()
-        os.chdir(self.parameters['paths']['pubmed_data_download'])
+        os.chdir(self.download_folder)
         file_name = re.findall('(.*)/(.*)', file_name)[0][1]
         os.remove('./' + file_name)

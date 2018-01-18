@@ -1,4 +1,5 @@
 import sys
+import os
 
 
 class Query_Executor:
@@ -6,7 +7,7 @@ class Query_Executor:
     Small helper class to execute query, and log them if there is an error
     """
     def __init__(self, parameters):
-        self.log_file = parameters['paths']['sql_error_log']
+        self.log_file = os.path.join(parameters['paths']['program_path'], parameters['paths']['sql_error_log'])
 
     def execute(self, connection, sql_command):
         cursor = connection.cursor()
