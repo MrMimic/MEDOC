@@ -420,7 +420,7 @@ class MEDOC(object):
                                '<descriptorname .*majortopicyn="[A-Z]{1}".*?>(.*?)</descriptorname>', str(mesh)),
 
                            'descriptor_ui': re.findall(
-                               '<descriptorname .*?ui="(D[0-9]{1,9})".*?>.*?</descriptorname>', str(mesh)),
+                               '<descriptorname .*?ui="(D\d+)".*?>.*?</descriptorname>', str(mesh)),
 
                            'descriptor_name_major_yn': re.findall(
                                '<descriptorname .*?majortopicyn="([A-Z]{1})".*?>.*?</descriptorname>', str(mesh)),
@@ -428,7 +428,7 @@ class MEDOC(object):
                                '<qualifiername .*?>(.*?)</qualifiername>', str(mesh)),
 
                            'qualifier_ui': re.findall(
-                               '<qualifiername .*?ui="(Q[0-9]{1,7})">.*?</qualifiername>',
+                               '<qualifiername .*?ui="(Q\d+)">.*?</qualifiername>',
                                str(mesh)),
 
                            'qualifier_name_major_yn': re.findall(
