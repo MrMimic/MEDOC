@@ -11,14 +11,10 @@
 # ==============================================================================
 
 
-
-import os
 import re
 import sys
-import json
 import time
 import configparser
-import pymysql.cursors
 
 sys.path.append('./lib')
 import MEDOC
@@ -29,6 +25,7 @@ if __name__ == '__main__':
     MEDOC = MEDOC.MEDOC()
     parameters = configparser.ConfigParser()
     parameters.read('./configuration.cfg')
+    insert_limit = int(parameters['database']['insert_command_limit'])
 
     # Step A : Create database if not exist
     MEDOC.create_pubmedDB()
@@ -83,7 +80,7 @@ if __name__ == '__main__':
                 if articles_count % 10000 == 0:
                     print('{} articles inserted for file {}'.format(articles_count, file_to_download))
 
-                article_cleaned = re.sub('\'', ' ', str(raw_article)).encode('utf-8')
+                article_cleaned = re.sub('\'', ' ', str(raw_article))
                 article_INSERT_list = MEDOC.get_command(article=article_cleaned, gz=file_downloaded)
 
                 # Step G: For every table in articles, loop to create global insert
@@ -93,7 +90,7 @@ if __name__ == '__main__':
                     if insert_table['name'] == 'medline_citation':
                         values_medline_citation = getters.get_medline_citation(insert_table)
                         values_tot_medline_citation.append('(' + ', '.join(values_medline_citation[0]) + ')')
-                        if (len(values_tot_medline_citation) == parameters['database']['insert_command_limit']) or (
+                        if (len(values_tot_medline_citation) == insert_limit) or (
                                     articles_count == len(articles)):
                             getters.send_medline_citation(values_medline_citation[1], values_tot_medline_citation,
                                                           parameters)
@@ -104,8 +101,7 @@ if __name__ == '__main__':
                         values_medline_article_language = getters.get_medline_article_language(insert_table)
                         values_tot_medline_article_language.append(
                             '(' + ', '.join(values_medline_article_language[0]) + ')')
-                        if (len(values_tot_medline_article_language) == parameters['database'][
-                            'insert_command_limit']) or (articles_count == len(articles)):
+                        if (len(values_tot_medline_article_language) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_article_language(values_medline_article_language[1],
                                                                   values_tot_medline_article_language, parameters)
                             values_tot_medline_article_language = []
@@ -116,8 +112,7 @@ if __name__ == '__main__':
                             insert_table)
                         values_tot_medline_article_publication_type.append(
                             '(' + ', '.join(values_medline_article_publication_type[0]) + ')')
-                        if (len(values_tot_medline_article_publication_type) == parameters['database'][
-                            'insert_command_limit']) or (articles_count == len(articles)):
+                        if (len(values_tot_medline_article_publication_type) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_article_publication_type(values_medline_article_publication_type[1],
                                                                           values_tot_medline_article_publication_type,
                                                                           parameters)
@@ -127,8 +122,7 @@ if __name__ == '__main__':
                     if insert_table['name'] == 'medline_author':
                         values_medline_author = getters.get_medline_author(insert_table)
                         values_tot_medline_author.append('(' + ', '.join(values_medline_author[0]) + ')')
-                        if (len(values_tot_medline_author) == parameters['database']['insert_command_limit']) or (
-                                    articles_count == len(articles)):
+                        if (len(values_tot_medline_author) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_author(values_medline_author[1], values_tot_medline_author, parameters)
                             values_tot_medline_author = []
 
@@ -136,8 +130,7 @@ if __name__ == '__main__':
                     if insert_table['name'] == 'medline_chemical_list':
                         values_medline_chemical_list = getters.get_medline_chemical_list(insert_table)
                         values_tot_medline_chemical_list.append('(' + ', '.join(values_medline_chemical_list[0]) + ')')
-                        if (len(values_tot_medline_chemical_list) == parameters['database'][
-                            'insert_command_limit']) or (articles_count == len(articles)):
+                        if (len(values_tot_medline_chemical_list) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_chemical_list(values_medline_chemical_list[1],
                                                                values_tot_medline_chemical_list, parameters)
                             values_tot_medline_chemical_list = []
@@ -147,8 +140,7 @@ if __name__ == '__main__':
                         values_medline_citation_other_id = getters.get_medline_citation_other_id(insert_table)
                         values_tot_medline_citation_other_id.append(
                             '(' + ', '.join(values_medline_citation_other_id[0]) + ')')
-                        if (len(values_tot_medline_citation_other_id) == parameters['database'][
-                            'insert_command_limit']) or (articles_count == len(articles)):
+                        if (len(values_tot_medline_citation_other_id) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_citation_other_id(values_medline_citation_other_id[1],
                                                                    values_tot_medline_citation_other_id, parameters)
                             values_tot_medline_citation_other_id = []
@@ -158,8 +150,7 @@ if __name__ == '__main__':
                         values_medline_citation_subsets = getters.get_medline_citation_subsets(insert_table)
                         values_tot_medline_citation_subsets.append(
                             '(' + ', '.join(values_medline_citation_subsets[0]) + ')')
-                        if (len(values_tot_medline_citation_subsets) == parameters['database'][
-                            'insert_command_limit']) or (articles_count == len(articles)):
+                        if (len(values_tot_medline_citation_subsets) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_citation_subsets(values_medline_citation_subsets[1],
                                                                   values_tot_medline_citation_subsets, parameters)
                             values_tot_medline_citation_subsets = []
@@ -169,8 +160,7 @@ if __name__ == '__main__':
                         values_medline_comments_corrections = getters.get_medline_comments_corrections(insert_table)
                         values_tot_medline_comments_corrections.append(
                             '(' + ', '.join(values_medline_comments_corrections[0]) + ')')
-                        if (len(values_tot_medline_comments_corrections) == parameters['database'][
-                            'insert_command_limit']) or (articles_count == len(articles)):
+                        if (len(values_tot_medline_comments_corrections) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_comments_corrections(values_medline_comments_corrections[1],
                                                                       values_tot_medline_comments_corrections,
                                                                       parameters)
@@ -180,8 +170,7 @@ if __name__ == '__main__':
                     if insert_table['name'] == 'medline_data_bank':
                         values_medline_data_bank = getters.get_medline_data_bank(insert_table)
                         values_tot_medline_data_bank.append('(' + ', '.join(values_medline_data_bank[0]) + ')')
-                        if (len(values_tot_medline_data_bank) == parameters['database']['insert_command_limit']) or (
-                                    articles_count == len(articles)):
+                        if (len(values_tot_medline_data_bank) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_data_bank(values_medline_data_bank[1], values_tot_medline_data_bank,
                                                            parameters)
                             values_tot_medline_data_bank = []
@@ -190,8 +179,7 @@ if __name__ == '__main__':
                     if insert_table['name'] == 'medline_grant':
                         values_medline_grant = getters.get_medline_grant(insert_table)
                         values_tot_medline_grant.append('(' + ', '.join(values_medline_grant[0]) + ')')
-                        if (len(values_tot_medline_grant) == parameters['database']['insert_command_limit']) or (
-                                    articles_count == len(articles)):
+                        if (len(values_tot_medline_grant) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_grant(values_medline_grant[1], values_tot_medline_grant, parameters)
                             values_tot_medline_grant = []
 
@@ -199,8 +187,7 @@ if __name__ == '__main__':
                     if insert_table['name'] == 'medline_investigator':
                         values_medline_investigator = getters.get_medline_investigator(insert_table)
                         values_tot_medline_investigator.append('(' + ', '.join(values_medline_investigator[0]) + ')')
-                        if (len(values_tot_medline_investigator) == parameters['database']['insert_command_limit']) or (
-                                    articles_count == len(articles)):
+                        if (len(values_tot_medline_investigator) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_investigator(values_medline_investigator[1],
                                                               values_tot_medline_investigator, parameters)
                             values_tot_medline_investigator = []
@@ -209,8 +196,7 @@ if __name__ == '__main__':
                     if insert_table['name'] == 'medline_mesh_heading':
                         values_medline_mesh_heading = getters.get_medline_mesh_heading(insert_table)
                         values_tot_medline_mesh_heading.append('(' + ', '.join(values_medline_mesh_heading[0]) + ')')
-                        if (len(values_tot_medline_mesh_heading) == parameters['database']['insert_command_limit']) or (
-                                    articles_count == len(articles)):
+                        if (len(values_tot_medline_mesh_heading) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_mesh_heading(values_medline_mesh_heading[1],
                                                               values_tot_medline_mesh_heading, parameters)
                             values_tot_medline_mesh_heading = []
@@ -220,8 +206,7 @@ if __name__ == '__main__':
                         values_medline_personal_name_subject = getters.get_medline_personal_name_subject(insert_table)
                         values_tot_medline_personal_name_subject.append(
                             '(' + ', '.join(values_medline_personal_name_subject[0]) + ')')
-                        if (len(values_tot_medline_personal_name_subject) == parameters['database'][
-                            'insert_command_limit']) or (articles_count == len(articles)):
+                        if (len(values_tot_medline_personal_name_subject) == insert_limit) or (articles_count == len(articles)):
                             getters.send_medline_personal_name_subject(values_medline_personal_name_subject[1],
                                                                        values_tot_medline_personal_name_subject,
                                                                        parameters)
