@@ -46,7 +46,6 @@ def get_medline_citation(insert_table):
 
 
 def send_medline_citation(fields_medline_citation, values_tot_medline_citation, parameters):
-    # When len(list) == threshold, build command
     sql_command = 'INSERT INTO ' + 'medline_citation' + ' (' + ', '.join(
         fields_medline_citation) + ') VALUES ' + ', '.join(values_tot_medline_citation) + ' ;'
     connection = pymysql.connect(
@@ -56,6 +55,7 @@ def send_medline_citation(fields_medline_citation, values_tot_medline_citation, 
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -90,6 +90,7 @@ def send_medline_article_language(fields_medline_article_language, values_tot_me
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -126,6 +127,7 @@ def send_medline_article_publication_type(fields_medline_article_publication_typ
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -161,6 +163,7 @@ def send_medline_author(fields_medline_author, values_tot_medline_author, parame
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -195,6 +198,7 @@ def send_medline_chemical_list(fields_medline_chemical_list, values_tot_medline_
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -229,6 +233,7 @@ def send_medline_citation_other_id(fields_medline_citation_other_id, values_tot_
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -263,6 +268,7 @@ def send_medline_citation_subsets(fields_medline_citation_subsets, values_tot_me
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -298,6 +304,7 @@ def send_medline_comments_corrections(fields_medline_comments_corrections, value
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -332,6 +339,7 @@ def send_medline_data_bank(fields_medline_data_bank, values_tot_medline_data_ban
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -366,6 +374,7 @@ def send_medline_grant(fields_medline_grant, values_tot_medline_grant, parameter
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -401,6 +410,7 @@ def send_medline_investigator(fields_medline_investigator, values_tot_medline_in
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -436,6 +446,7 @@ def send_medline_mesh_heading(fields_medline_mesh_heading, values_tot_medline_me
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)
@@ -472,6 +483,7 @@ def send_medline_personal_name_subject(fields_medline_personal_name_subject, val
         password=parameters['database']['password'],
         database=parameters['database']['database'],
         cursorclass=pymysql.cursors.DictCursor,
+        charset='utf8mb4',
         autocommit=True
     )
     Query_Executor(parameters).execute(connection, sql_command)

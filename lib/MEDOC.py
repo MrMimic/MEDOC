@@ -162,7 +162,7 @@ class MEDOC(object):
         start_time = time.time()
         os.chdir(self.parameters['paths']['pubmed_data_download'])
         #  Extraction
-        gz_file = gzip.open(file_name, 'rb')
+        gz_file = gzip.open(file_name, 'rt', encoding='utf-8')
         file_content = gz_file.read()
         os.chdir(self.parameters['paths']['program_path'])
         print('Elapsed time: {} sec for module: {}'.format(round(time.time() - start_time, 2), MEDOC.extract.__name__))
@@ -223,7 +223,7 @@ class MEDOC(object):
         #  journal
         journal = soup_article.find_all('journal')
         #  abstract_text_list
-        abstract_text_list = re.findall('<abstracttext>?(.*)</abstracttext>', str(article))
+        abstract_text_list = re.findall('<abstracttext.*?>(.*?)</abstracttext>', str(article))
         if len(abstract_text_list) > 1:
             abstract_text_raw = ''.join(abstract_text_list)
             abstract_text = re.sub('\"', ' ', str(abstract_text_raw))
@@ -242,46 +242,49 @@ class MEDOC(object):
         #  INSERT
         article_INSERT_list.append(
             {'name': 'medline_citation',
-             'value': {'pmid': pmid_primary_key,
-                       'date_created': date_completed_value,
-                       'date_completed': date_completed_value,
-                       'date_revised': date_revised_value,
-                       'issn': re.findall('<issn issntype=".*">(.*)</issn>', str(article)),
-                       'volume': re.findall('<volume>([0-9]*)</volume>', str(article)),
-                       'issue': re.findall('<issue>([0-9]*)</issue>', str(article)),
-                       'pub_date_year': re.findall('<year>([0-9]{4})</year>', str(date_published)),
-                       'pub_date_month': re.findall('<month>([0-9]{2})</month>', str(date_published)),
-                       'pub_date_day': re.findall('<day>([0-9]{2})</day>', str(date_published)),
-                       'medline_date': re.findall('<medlinedate>(.*)</medlinedate>', str(date_published)),
-                       'journal_title': re.findall('<title>(.*)</title>', str(journal)),
-                       'iso_abbreviation': re.findall('<isoabbreviation>(.*)</isoabbreviation>', str(journal)),
-                       'article_title': re.findall('<articletitle>(.*)</articletitle>', str(article)),
-                       'medline_pgn': re.findall('<medlinepgn>(.*)</medlinepgn>', str(article)),
-                       'abstract_text': abstract_text,
-                       'copyright_info': re.findall('<copyrightinformation>(.*)</copyrightinformation>', str(article)),
-                       'article_author_list_comp_yn': re.findall('<authorlist completeyn="([A-Z]{1})">', str(article)),
-                       'data_bank_list_comp_yn': re.findall('<databanklist completeyn="([A-Z]{1})">', str(article)),
-                       'grantlist_complete_yn': re.findall('<grantlist completeyn="([A-Z]{1})">', str(article)),
-                       'vernacular_title': re.findall('<vernaculartitle>(.*)</vernaculartitle>', str(article)),
-                       'date_of_electronic_publication': date_of_electronic_publication_value,
-                       'country': re.findall('<country>(.*)</country>', str(medline_info_journal)),
-                       'medline_ta': re.findall('<medlineta>(.*)</medlineta>', str(article)),
-                       'nlm_unique_id': re.findall('<nlmuniqueid>(.*)</nlmuniqueid>', str(article)),
-                       'xml_file_name': gz,
-                       'number_of_references': re.findall('<numberofreferences>(.*)</numberofreferences>',
-                                                          str(article)),
-                       'citation_owner': re.findall('<medlinecitation owner="(.*)" status="[A-Za-z]">', str(article)),
-                       'citation_status': re.findall('<medlinecitation owner=".*" status="([A-Za-z])">', str(article))}
-             })
+             'value': {
+                 'pmid': pmid_primary_key,
+                 'date_created': date_completed_value,
+                 'date_completed': date_completed_value,
+                 'date_revised': date_revised_value,
+                 'issn': re.findall('<issn issntype=".*">(.*)</issn>', str(article)),
+                 'volume': re.findall('<volume>([0-9]*)</volume>', str(article)),
+                 'issue': re.findall('<issue>([0-9]*)</issue>', str(article)),
+                 'pub_date_year': re.findall('<year>([0-9]{4})</year>', str(date_published)),
+                 'pub_date_month': re.findall('<month>([0-9]{2}|\w+)</month>', str(date_published)),
+                 'pub_date_day': re.findall('<day>([0-9]{2})</day>', str(date_published)),
+                 'medline_date': re.findall('<medlinedate>(.*)</medlinedate>', str(date_published)),
+                 'journal_title': re.findall('<title>(.*)</title>', str(journal)),
+                 'iso_abbreviation': re.findall('<isoabbreviation>(.*)</isoabbreviation>', str(journal)),
+                 'article_title': re.findall('<articletitle>(.*)</articletitle>', str(article)),
+                 'medline_pgn': re.findall('<medlinepgn>(.*)</medlinepgn>', str(article)),
+                 'abstract_text': abstract_text,
+                 'copyright_info': re.findall('<copyrightinformation>(.*)</copyrightinformation>', str(article)),
+                 'article_author_list_comp_yn': re.findall('<authorlist completeyn="([A-Z]{1})">', str(article)),
+                 'data_bank_list_comp_yn': re.findall('<databanklist completeyn="([A-Z]{1})">', str(article)),
+                 'grantlist_complete_yn': re.findall('<grantlist completeyn="([A-Z]{1})">', str(article)),
+                 'vernacular_title': re.findall('<vernaculartitle>(.*)</vernaculartitle>', str(article)),
+                 'date_of_electronic_publication': date_of_electronic_publication_value,
+                 'country': re.findall('<country>(.*)</country>', str(medline_info_journal)),
+                 'medline_ta': re.findall('<medlineta>(.*)</medlineta>', str(article)),
+                 'nlm_unique_id': re.findall('<nlmuniqueid>(.*)</nlmuniqueid>', str(article)),
+                 'xml_file_name': gz,
+                 'number_of_references': re.findall('<numberofreferences>(.*)</numberofreferences>', str(article)),
+                 'citation_owner': re.findall('<medlinecitation .*?owner="(.*?)".*?>', str(article)),
+                 'citation_status': re.findall('<medlinecitation .*?status="([A-Za-z])".*?>', str(article))}
+             }
+        )
 
         ''' - - - - - - - - - - - - - -
 		medline_article_language
 		- - - - - - - - - - - - - -  '''
-        article_INSERT_list.append(
-            {'name': 'medline_article_language',
-             'value': {'pmid': pmid_primary_key,
-                       'language': re.findall('<language>(.*)</language>', str(article))}
-             })
+        languages_list = soup_article.find_all('language')
+        for language in languages_list:
+            article_INSERT_list.append(
+                {'name': 'medline_article_language',
+                 'value': {'pmid': pmid_primary_key,
+                           'language': re.findall('<language>(.*)</language>', str(language))}
+                 })
 
         ''' - - - - - - - - - - - - - -
 		medline_article_publication_type
@@ -291,7 +294,8 @@ class MEDOC(object):
             article_INSERT_list.append(
                 {'name': 'medline_article_publication_type',
                  'value': {'pmid': pmid_primary_key,
-                           'publication_type': re.findall('<publicationtype ui=".*">(.*)</publicationtype>', str(publication_type))}
+                           'publication_type': re.findall('<publicationtype ui=".*?">(.*?)</publicationtype>',
+                                                          str(publication_type))}
                  })
 
         ''' - - - - - - - - - - - - - -
@@ -340,11 +344,14 @@ class MEDOC(object):
         ''' - - - - - - - - - - - - - - 
 		medline_citation_subsets
 		- - - - - - - - - - - - - - '''
-        article_INSERT_list.append(
-            {'name': 'medline_citation_subsets',
-             'value': {'pmid': pmid_primary_key,
-                       'citation_subset': re.findall('<citationsubset>(.*)</citationsubset>', str(article))}
-             })
+        citation_subsets_list = soup_article.find_all('citationsubset')
+        for citation_subsets in citation_subsets_list:
+            article_INSERT_list.append(
+                {'name': 'medline_citation_subsets',
+                 'value': {'pmid': pmid_primary_key,
+                           'citation_subset': re.findall('<citationsubset>(.*)</citationsubset>',
+                                                         str(citation_subsets))}
+                 })
 
         ''' - - - - - - - - - - - - - - 
 		medline_comments_corrections
@@ -413,7 +420,7 @@ class MEDOC(object):
                                '<descriptorname .*majortopicyn="[A-Z]{1}".*?>(.*?)</descriptorname>', str(mesh)),
 
                            'descriptor_ui': re.findall(
-                               '<descriptorname .*?ui="(D[0-9]{1,7})".*?>.*?</descriptorname>', str(mesh)),
+                               '<descriptorname .*?ui="(D[0-9]{1,9})".*?>.*?</descriptorname>', str(mesh)),
 
                            'descriptor_name_major_yn': re.findall(
                                '<descriptorname .*?majortopicyn="([A-Z]{1})".*?>.*?</descriptorname>', str(mesh)),
