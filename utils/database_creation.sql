@@ -46,7 +46,7 @@ CREATE INDEX pk_med_meshheading on medline_mesh_heading(pmid, descriptor_name, q
 #==============================================================
 # TABLE: medline_comments_corrections 
 #==============================================================
-CREATE TABLE medline_comments_corrections (pmid INTEGER NOT NULL, ref_pmid VARCHAR(15), type VARCHAR(20), ref_source VARCHAR(1000)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE TABLE medline_comments_corrections (pmid INTEGER NOT NULL, ref_pmid VARCHAR(15), type VARCHAR(25), ref_source VARCHAR(1000)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 CREATE INDEX idx_comments_pmid on medline_comments_corrections(pmid);
 
 #==============================================================
