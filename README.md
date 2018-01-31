@@ -9,7 +9,11 @@ More information about MEDOC on OMICTools website or on MEDOC's publication on a
 
 ## About
 
-### What is MEDLINE ?
+### Development
+
+Thanks to [rafspiny](https://github.com/rafspiny) for his multiple corrections and feedback !
+
+### What is MEDLINE?
 
 [MEDLINE](https://www.nlm.nih.gov/bsd/pmresources.html) is a database of scientitifc articles released by the NIH. [Pubmed](https://www.ncbi.nlm.nih.gov/pubmed/) is the most common way to query this database, used daily by many scientists around the world.
 
