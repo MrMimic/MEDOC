@@ -30,17 +30,21 @@ Open a terminal.
 	cd ./MEDOC
 
 ### Setup
+
 Here prerequisites and installation procedures will be discussed.
 
 #### Prerequisites 
+
 XML parsing libraries may be needed. You can install them on any Debian-derived system with:
 
-	> sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+	sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
 
 You may also need `python-dev`. You can also install it with the same command:
-	> sudo apt-get install python-dev
+
+	sudo apt-get install python-dev
 
 #### Installation
+
 The second step is to install external dependencies and to cythonize python functions.
 
 Thus, run the file *SETUP.py*
@@ -60,7 +64,7 @@ There's no need to Cythonize functions anymore, they've been optimized.
 **Alternatively** you can exploit the requirements.txt file shipped with the project.
 Simply run the following command from the MEDOC folder.
 
-	> pip3 install -r requirements.txt
+	pip3 install -r requirements.txt
 
 	bs4==0.0.1
 	beautifulsoup4==4.6.0
@@ -70,6 +74,7 @@ Simply run the following command from the MEDOC folder.
 	PyMySQL==0.7.11
 
 #### Configuration
+
 Before you can run the code, you should take a look at `parameters.json` file and customize it according to your 
 environment.
 
@@ -126,7 +131,7 @@ __Program stop running because of 'Segmentation fault (core dumped)'__
 Indexing a file with 30K article take some time and RAM. Try to open the function _/lib_medline/python_functions/E_parse_xml.py_ and go to the line:
 
 	soup = BeautifulSoup(file_content, 'lxml')
-	
+
 Change '_lxml_' to '_html-parser_' and re-launch SETUP.py.
 
 Or simply try to lower the '_insert_command_limit_' parameter, to insert values more often in the database, thus saving RAM usage.
@@ -137,13 +142,16 @@ __SQL insertions are taking really a lot of time (more than 15min / file)'__
 Recreate the SQL database after dropping it, by running the following command:
 
 	DROP DATABASE pubmed ;
-	
+
 Then, comment every line about indexes (_CREATE INDEX_) or foreigns keys (_ALTER TABLE_) into the SQL creation file. Indexes are slowing up insertions.
 
 When the database is full, launch the indexes and alter commands once at a time.
 
 __Problem installing lxml__
+
 Make sure you have all the right dependencies installed
+
 On Debian based machines try running:
-> sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev
+
+	sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev
 
