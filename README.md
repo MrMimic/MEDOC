@@ -132,7 +132,7 @@ Then, a regular output for a file loading should look like:
 
 __Program stop running because of 'Segmentation fault (core dumped)'__
 
-Indexing a file with 30K article take some time and RAM. Try to open the function _/lib_medline/python_functions/E_parse_xml.py_ and go to the line:
+Indexing a file with 30K article take some time and RAM (if you know other parser than LXML, more RAM-frieldy, do a PR). Try to open the function _/lib_medline/python_functions/E_parse_xml.py_ and go to the line:
 
 	soup = BeautifulSoup(file_content, 'lxml')
 
