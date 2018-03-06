@@ -8,11 +8,21 @@ class Query_Executor:
     """
     def __init__(self, parameters):
         self.log_file = os.path.join(parameters['paths']['program_path'], parameters['paths']['sql_error_log'])
-
-    def execute(self, connection, sql_command):
+        self.connection = pymysql.connect(
+            host=parameters['database']['host'],
+            port=int(parameters['database']['port']),
+            user=parameters['database']['user'],
+            password=parameters['database']['password'],
+            database=parameters['database']['database'],
+            cursorclass=pymysql.cursors.DictCursor,
+            charset='utf8mb4',
+            autocommit=True,
+            init_command='SET ROLE pubmed_role;')
+    def execute(self, sql_command):
+        connection = self.connection
         cursor = connection.cursor()
         try:
-			cursor.execute('SET ROLE pubmed_role;')
+            #~ cursor.execute('SET ROLE pubmed_role;')
             cursor.execute(sql_command)
             connection.close()
         except:
