@@ -55,6 +55,7 @@ class MEDOC(object):
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=True)
         cursor = connection.cursor()
+        cursor.execute('SET ROLE pubmed_role;')
         #  Check if 'pubmed' db exists, if not, create it by executing SQL file line by line
         cursor.execute('SHOW DATABASES ;')
         local_dbNames = []
