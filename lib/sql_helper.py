@@ -12,6 +12,7 @@ class Query_Executor:
     def execute(self, connection, sql_command):
         cursor = connection.cursor()
         try:
+			cursor.execute('SET ROLE pubmed_role;')
             cursor.execute(sql_command)
             connection.close()
         except:
