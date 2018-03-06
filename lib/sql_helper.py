@@ -13,11 +13,11 @@ class Query_Executor:
             port=int(parameters['database']['port']),
             user=parameters['database']['user'],
             password=parameters['database']['password'],
-            database=parameters['database']['database'],
+            #~ database=parameters['database']['database'],
             cursorclass=pymysql.cursors.DictCursor,
             charset='utf8mb4',
             autocommit=True,
-            init_command='SET ROLE pubmed_role;')
+            init_command='SET ROLE pubmed_role; USE pubmed;')
     def execute(self, sql_command):
         connection = self.connection
         cursor = connection.cursor()

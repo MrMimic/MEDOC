@@ -102,16 +102,16 @@ def send_medline_article_publication_type(fields_medline_article_publication_typ
     sql_command = 'INSERT INTO ' + 'medline_article_publication_type' + ' (' + ', '.join(
         fields_medline_article_publication_type) + ') VALUES ' + ', '.join(
         values_tot_medline_article_publication_type) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -138,16 +138,16 @@ def get_medline_author(insert_table):
 def send_medline_author(fields_medline_author, values_tot_medline_author, parameters):
     sql_command = 'INSERT INTO ' + 'medline_author' + ' (' + ', '.join(fields_medline_author) + ') VALUES ' + ', '.join(
         values_tot_medline_author) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -173,16 +173,16 @@ def get_medline_chemical_list(insert_table):
 def send_medline_chemical_list(fields_medline_chemical_list, values_tot_medline_chemical_list, parameters):
     sql_command = 'INSERT INTO ' + 'medline_chemical_list' + ' (' + ', '.join(
         fields_medline_chemical_list) + ') VALUES ' + ', '.join(values_tot_medline_chemical_list) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -208,16 +208,16 @@ def get_medline_citation_other_id(insert_table):
 def send_medline_citation_other_id(fields_medline_citation_other_id, values_tot_medline_citation_other_id, parameters):
     sql_command = 'INSERT INTO ' + 'medline_citation_other_id' + ' (' + ', '.join(
         fields_medline_citation_other_id) + ') VALUES ' + ', '.join(values_tot_medline_citation_other_id) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -243,16 +243,16 @@ def get_medline_citation_subsets(insert_table):
 def send_medline_citation_subsets(fields_medline_citation_subsets, values_tot_medline_citation_subsets, parameters):
     sql_command = 'INSERT INTO ' + 'medline_citation_subsets' + ' (' + ', '.join(
         fields_medline_citation_subsets) + ') VALUES ' + ', '.join(values_tot_medline_citation_subsets) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -279,16 +279,16 @@ def send_medline_comments_corrections(fields_medline_comments_corrections, value
                                       parameters):
     sql_command = 'INSERT INTO ' + 'medline_comments_corrections' + ' (' + ', '.join(
         fields_medline_comments_corrections) + ') VALUES ' + ', '.join(values_tot_medline_comments_corrections) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -314,16 +314,16 @@ def get_medline_data_bank(insert_table):
 def send_medline_data_bank(fields_medline_data_bank, values_tot_medline_data_bank, parameters):
     sql_command = 'INSERT INTO ' + 'medline_data_bank' + ' (' + ', '.join(
         fields_medline_data_bank) + ') VALUES ' + ', '.join(values_tot_medline_data_bank) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -349,16 +349,16 @@ def get_medline_grant(insert_table):
 def send_medline_grant(fields_medline_grant, values_tot_medline_grant, parameters):
     sql_command = 'INSERT INTO ' + 'medline_grant' + ' (' + ', '.join(fields_medline_grant) + ') VALUES ' + ', '.join(
         values_tot_medline_grant) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -385,16 +385,16 @@ def get_medline_investigator(insert_table):
 def send_medline_investigator(fields_medline_investigator, values_tot_medline_investigator, parameters):
     sql_command = 'INSERT INTO ' + 'medline_investigator' + ' (' + ', '.join(
         fields_medline_investigator) + ') VALUES ' + ', '.join(values_tot_medline_investigator) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -421,16 +421,16 @@ def get_medline_mesh_heading(insert_table):
 def send_medline_mesh_heading(fields_medline_mesh_heading, values_tot_medline_mesh_heading, parameters):
     sql_command = 'INSERT INTO ' + 'medline_mesh_heading' + ' (' + ', '.join(
         fields_medline_mesh_heading) + ') VALUES ' + ', '.join(values_tot_medline_mesh_heading) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
 
 
@@ -458,14 +458,14 @@ def send_medline_personal_name_subject(fields_medline_personal_name_subject, val
                                        parameters):
     sql_command = 'INSERT INTO ' + 'medline_personal_name_subject' + ' (' + ', '.join(
         fields_medline_personal_name_subject) + ') VALUES ' + ', '.join(values_tot_medline_personal_name_subject) + ' ;'
-    connection = pymysql.connect(
-        host=parameters['database']['host'],
-        port=int(parameters['database']['port']),
-        user=parameters['database']['user'],
-        password=parameters['database']['password'],
-        database=parameters['database']['database'],
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4',
-        autocommit=True
-    )
+    #~ connection = pymysql.connect(
+        #~ host=parameters['database']['host'],
+        #~ port=int(parameters['database']['port']),
+        #~ user=parameters['database']['user'],
+        #~ password=parameters['database']['password'],
+        #~ database=parameters['database']['database'],
+        #~ cursorclass=pymysql.cursors.DictCursor,
+        #~ charset='utf8mb4',
+        #~ autocommit=True
+    #~ )
     Query_Executor(parameters).execute(sql_command)
