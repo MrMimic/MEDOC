@@ -7,7 +7,7 @@ More information about MEDOC on OMICTools website or on MEDOC's publication on a
 * https://omictools.com/medline-downloading-contrivance-tool
 
 
-## About
+## About MEDOC
 
 ### Development
 
