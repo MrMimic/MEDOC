@@ -28,7 +28,7 @@ The aim of this project is to download XML files provided by MEDLINE on a FTP an
 
 The first step is to clone this Github repository to your local machine.
 
-Open a terminal.
+Open a terminal:
 
 	git clone "https://github.com/MrMimic/MEDOC"
 	cd ./MEDOC
