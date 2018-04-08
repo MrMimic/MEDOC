@@ -26,7 +26,7 @@ The aim of this project is to download XML files provided by MEDLINE on a FTP an
 
 ### Clone this repository
 
-The first step is to clone this Github repository to your local machine.
+The first step is to clone this Github repository on your local machine.
 
 Open a terminal:
 
