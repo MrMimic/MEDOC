@@ -48,6 +48,10 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+*.cfg
+*.gz
+*.pyc
+
 # Translations
 *.mo
 *.pot
