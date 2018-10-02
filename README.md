@@ -11,7 +11,7 @@ More information about MEDOC on OMICTools website or on MEDOC's publication on a
 
 __WATCH OUT__: MEDOC is now starting in parallelized mode on the __master__ branch. Switch on the branch __sequential_version__ if you have less than 30Go of RAM or a single-code CPU. Or try to lower a lot the _insert_command_limit_ parameter.
 
-__PS__: Flake-8 formated code with 85 chars / line is ugly. Please avoid to let PyCharm format it before pulling a requests of merge.
+__PS__: Flake-8 formated code with 85 chars / line is ugly. Please avoid PyCharm to format it before pulling a merge request.
 
 *************
 *************
