@@ -33,7 +33,7 @@ def get_medline_citation(insert_table):
 
 	for field in fields_medline_citation:  # For every fields
 		for key, value in insert_table['value'].items():
-			if field == key:  If parsed value field == actual field
+			if field == key:  # If parsed value field == actual field
 				try:
 					value_to_append = '"' + (list(value)[0]).replace('"', '') + '"'
 				except KeyError:

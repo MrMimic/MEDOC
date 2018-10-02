@@ -11,6 +11,8 @@ More information about MEDOC on OMICTools website or on MEDOC's publication on a
 
 __WATCH OUT__: MEDOC is now starting in parallelized mode on the __master__ branch. Switch on the branch __sequential_version__ if you have less than 30Go of RAM or a single-code CPU. Or try to lower a lot the _insert_command_limit_ parameter.
 
+__PS__: Flake-8 formated code with 85 chars / line is ugly. Please avoid to let PyCharm format it before pulling a requests of merge.
+
 *************
 *************
 
@@ -79,16 +81,38 @@ Simply run the following command from the MEDOC folder.
 
 #### Configuration
 
-Before you can run the code, you should take a look at `parameters.json` file and customize it according to your 
-environment.
+Before you can run the code, you should first create a _configuration.cfg_ file and customize it according to your 
+environment. Below is the dist.config:
+
+# ================================ GLOBAL =============================================
+[informations]
+version: 1.2.2
+author: emeric.dynomant@omictools.com
+
+# =========================== MYSQL ============================================
+[database]
+path_to_sql: ./utils/database_creation.sql
+user: YOUR_SQL_USER
+password: YOUR_SQL_PWD
+host: YOUR_SQL_HOST
+port: YOUR_SQL_PORT
+database: pubmed
+insert_command_limit: 750
+
+# =========================== PATH ============================================
+[paths]
+program_path: /home/emeric/1_Github/MEDOC
+pubmed_data_download: ./pudmed_data/
+sql_error_log: ./log/errors.log
+already_downloaded_files: ./log/inserted.log
 
 Plus, if you have already a user to access the DB you wish to create you can change the `schema` file to reflect that.
 You can change the DB_USER and the DB_PASSWORD fields with the following command.
 Suppose your credentials are: my_custom_user/my_secret_password
 
 ```bash
-export MEDOC_SQL_FILE='database_creation.sql'
-sed -i'' -e "s/\bdb_user\b/my_custom_user/g" $MEDOC_SQL_FILE
+export MEDOC_SQL_FILE='./utils/database_creation.sql'
+sed -i'' -e "s/\bDB_USER\b/my_custom_user/g" $MEDOC_SQL_FILE
 sed -i'' -e "s/\bDB_PASSWORD\b/my_secret_password/g" $MEDOC_SQL_FILE
 ```
 
@@ -105,27 +129,6 @@ Leave database name to '_pubmed_' but change the mySQL password to yours.
 Then, simply execute :
 
 	python3 __execution__.py 
-
-	
-### Output
-
-First line should be about database creation and number of files to download.
-
-Then, a regular output for a file loading should look like:
-
-	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - DOWNLOADING FILE
-	Downloading baseline/medline17n0216.xml.gz ..
-	Elapsed time: 12.32 sec for module: download
-	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - FILE EXTRACTION
-	Elapsed time: 0.42 sec for module: extract
-	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - XML FILE PARSING
-	Elapsed time: 72.47 sec for module: parse
-	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - SQL INSERTION
-	10000 articles inserted for file baseline/medline17n0216.xml.gz
-	20000 articles inserted for file baseline/medline17n0216.xml.gz
-	30000 articles inserted for file baseline/medline17n0216.xml.gz
-	Total time for file medline17n0216.xml.gz: 5.29 min
-
 
 
 ## Issues

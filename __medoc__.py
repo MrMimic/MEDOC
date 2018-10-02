@@ -28,6 +28,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.ERROR)  # ALL, DEBUG, INFO,
 
 def parallelize(file_to_download):
 
+		logging.info('Processing {}.'.format(file_to_download))
 		start_time = time.time()
 
 		if file_to_download not in open(insert_log_path).read().splitlines():
@@ -63,32 +64,25 @@ def parallelize(file_to_download):
 					if insert_table['name'] == 'medline_citation':
 						values_medline_citation = getters.get_medline_citation(insert_table)
 						values_tot_medline_citation.append('(' + ', '.join(values_medline_citation[0]) + ')')
-						if (len(values_tot_medline_citation) == insert_limit) or (
-									articles_count == len(articles)):
-							getters.send_medline_citation(values_medline_citation[1], values_tot_medline_citation,
-														  parameters)
+						if (len(values_tot_medline_citation) == insert_limit) or (articles_count == len(articles)):
+							getters.send_medline_citation(values_medline_citation[1], values_tot_medline_citation, parameters)
 							values_tot_medline_citation = []
 
 					#  ____ 2: medline_article_language
 					if insert_table['name'] == 'medline_article_language':
 						values_medline_article_language = getters.get_medline_article_language(insert_table)
-						values_tot_medline_article_language.append(
-							'(' + ', '.join(values_medline_article_language[0]) + ')')
+						values_tot_medline_article_language.append('(' + ', '.join(values_medline_article_language[0]) + ')')
 						if (len(values_tot_medline_article_language) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_article_language(values_medline_article_language[1],
-																  values_tot_medline_article_language, parameters)
+							getters.send_medline_article_language(values_medline_article_language[1], values_tot_medline_article_language, parameters)
 							values_tot_medline_article_language = []
 
 					#  ____ 3: medline_article_publication_type
 					if insert_table['name'] == 'medline_article_publication_type':
-						values_medline_article_publication_type = getters.get_medline_article_publication_type(
-							insert_table)
+						values_medline_article_publication_type = getters.get_medline_article_publication_type(insert_table)
 						values_tot_medline_article_publication_type.append(
 							'(' + ', '.join(values_medline_article_publication_type[0]) + ')')
 						if (len(values_tot_medline_article_publication_type) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_article_publication_type(values_medline_article_publication_type[1],
-																		  values_tot_medline_article_publication_type,
-																		  parameters)
+							getters.send_medline_article_publication_type(values_medline_article_publication_type[1], values_tot_medline_article_publication_type, parameters)
 							values_tot_medline_article_publication_type = []
 
 					#  ____ 4: medline_author
@@ -104,39 +98,31 @@ def parallelize(file_to_download):
 						values_medline_chemical_list = getters.get_medline_chemical_list(insert_table)
 						values_tot_medline_chemical_list.append('(' + ', '.join(values_medline_chemical_list[0]) + ')')
 						if (len(values_tot_medline_chemical_list) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_chemical_list(values_medline_chemical_list[1],
-															   values_tot_medline_chemical_list, parameters)
+							getters.send_medline_chemical_list(values_medline_chemical_list[1], values_tot_medline_chemical_list, parameters)
 							values_tot_medline_chemical_list = []
 
 					#  ____ 6: medline_citation_other_id
 					if insert_table['name'] == 'medline_citation_other_id':
 						values_medline_citation_other_id = getters.get_medline_citation_other_id(insert_table)
-						values_tot_medline_citation_other_id.append(
-							'(' + ', '.join(values_medline_citation_other_id[0]) + ')')
+						values_tot_medline_citation_other_id.append('(' + ', '.join(values_medline_citation_other_id[0]) + ')')
 						if (len(values_tot_medline_citation_other_id) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_citation_other_id(values_medline_citation_other_id[1],
-																   values_tot_medline_citation_other_id, parameters)
+							getters.send_medline_citation_other_id(values_medline_citation_other_id[1], values_tot_medline_citation_other_id, parameters)
 							values_tot_medline_citation_other_id = []
 
 					#  ____ 7: medline_citation_subsets
 					if insert_table['name'] == 'medline_citation_subsets':
 						values_medline_citation_subsets = getters.get_medline_citation_subsets(insert_table)
-						values_tot_medline_citation_subsets.append(
-							'(' + ', '.join(values_medline_citation_subsets[0]) + ')')
+						values_tot_medline_citation_subsets.append('(' + ', '.join(values_medline_citation_subsets[0]) + ')')
 						if (len(values_tot_medline_citation_subsets) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_citation_subsets(values_medline_citation_subsets[1],
-																  values_tot_medline_citation_subsets, parameters)
+							getters.send_medline_citation_subsets(values_medline_citation_subsets[1], values_tot_medline_citation_subsets, parameters)
 							values_tot_medline_citation_subsets = []
 
 					#  ____ 8: medline_comments_corrections
 					if insert_table['name'] == 'medline_comments_corrections':
 						values_medline_comments_corrections = getters.get_medline_comments_corrections(insert_table)
-						values_tot_medline_comments_corrections.append(
-							'(' + ', '.join(values_medline_comments_corrections[0]) + ')')
+						values_tot_medline_comments_corrections.append('(' + ', '.join(values_medline_comments_corrections[0]) + ')')
 						if (len(values_tot_medline_comments_corrections) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_comments_corrections(values_medline_comments_corrections[1],
-																	  values_tot_medline_comments_corrections,
-																	  parameters)
+							getters.send_medline_comments_corrections(values_medline_comments_corrections[1], values_tot_medline_comments_corrections, parameters)
 							values_tot_medline_comments_corrections = []
 
 					#  ____ 9: medline_data_bank
@@ -144,8 +130,7 @@ def parallelize(file_to_download):
 						values_medline_data_bank = getters.get_medline_data_bank(insert_table)
 						values_tot_medline_data_bank.append('(' + ', '.join(values_medline_data_bank[0]) + ')')
 						if (len(values_tot_medline_data_bank) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_data_bank(values_medline_data_bank[1], values_tot_medline_data_bank,
-														   parameters)
+							getters.send_medline_data_bank(values_medline_data_bank[1], values_tot_medline_data_bank, parameters)
 							values_tot_medline_data_bank = []
 
 					#  ____ 10: medline_grant
@@ -161,8 +146,7 @@ def parallelize(file_to_download):
 						values_medline_investigator = getters.get_medline_investigator(insert_table)
 						values_tot_medline_investigator.append('(' + ', '.join(values_medline_investigator[0]) + ')')
 						if (len(values_tot_medline_investigator) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_investigator(values_medline_investigator[1],
-															  values_tot_medline_investigator, parameters)
+							getters.send_medline_investigator(values_medline_investigator[1], values_tot_medline_investigator, parameters)
 							values_tot_medline_investigator = []
 
 					#  ____ 12: medline_mesh_heading
@@ -170,63 +154,45 @@ def parallelize(file_to_download):
 						values_medline_mesh_heading = getters.get_medline_mesh_heading(insert_table)
 						values_tot_medline_mesh_heading.append('(' + ', '.join(values_medline_mesh_heading[0]) + ')')
 						if (len(values_tot_medline_mesh_heading) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_mesh_heading(values_medline_mesh_heading[1],
-															  values_tot_medline_mesh_heading, parameters)
+							getters.send_medline_mesh_heading(values_medline_mesh_heading[1], values_tot_medline_mesh_heading, parameters)
 							values_tot_medline_mesh_heading = []
 
 					#  ____ 13: medline_personal_name_subject
 					if insert_table['name'] == 'medline_personal_name_subject':
 						values_medline_personal_name_subject = getters.get_medline_personal_name_subject(insert_table)
-						values_tot_medline_personal_name_subject.append(
-							'(' + ', '.join(values_medline_personal_name_subject[0]) + ')')
+						values_tot_medline_personal_name_subject.append('(' + ', '.join(values_medline_personal_name_subject[0]) + ')')
 						if (len(values_tot_medline_personal_name_subject) == insert_limit) or (articles_count == len(articles)):
-							getters.send_medline_personal_name_subject(values_medline_personal_name_subject[1],
-																	   values_tot_medline_personal_name_subject,
-																	   parameters)
+							getters.send_medline_personal_name_subject(values_medline_personal_name_subject[1], values_tot_medline_personal_name_subject, parameters)
 							values_tot_medline_personal_name_subject = []
 
 			# Step H: Write the remaining entries
 			if len(values_tot_medline_citation) > 0:
-				getters.send_medline_citation(values_medline_citation[1], values_tot_medline_citation,
-											  parameters)
+				getters.send_medline_citation(values_medline_citation[1], values_tot_medline_citation, parameters)
 			if len(values_tot_medline_article_language) > 0:
-				getters.send_medline_article_language(values_medline_article_language[1],
-												  values_tot_medline_article_language, parameters)
+				getters.send_medline_article_language(values_medline_article_language[1], values_tot_medline_article_language, parameters)
 			if len(values_tot_medline_article_publication_type) > 0:
-				getters.send_medline_article_publication_type(values_medline_article_publication_type[1],
-														  values_tot_medline_article_publication_type,
-														  parameters)
+				getters.send_medline_article_publication_type(values_medline_article_publication_type[1], values_tot_medline_article_publication_type, parameters)
 			if len(values_tot_medline_author) > 0:
 				getters.send_medline_author(values_medline_author[1], values_tot_medline_author, parameters)
-
 			if len(values_tot_medline_chemical_list) > 0:
-				getters.send_medline_chemical_list(values_medline_chemical_list[1],
-													   values_tot_medline_chemical_list, parameters)
+				getters.send_medline_chemical_list(values_medline_chemical_list[1], values_tot_medline_chemical_list, parameters)
 			if len(values_tot_medline_citation_other_id) > 0:
-				getters.send_medline_citation_other_id(values_medline_citation_other_id[1],
-												   values_tot_medline_citation_other_id, parameters)
+				getters.send_medline_citation_other_id(values_medline_citation_other_id[1], values_tot_medline_citation_other_id, parameters)
 			if len(values_tot_medline_citation_subsets) > 0:
-				getters.send_medline_citation_subsets(values_medline_citation_subsets[1],
-											  values_tot_medline_citation_subsets, parameters)
+				getters.send_medline_citation_subsets(values_medline_citation_subsets[1], values_tot_medline_citation_subsets, parameters)
 			if len(values_tot_medline_comments_corrections) > 0:
-				getters.send_medline_comments_corrections(values_medline_comments_corrections[1],
-											  values_tot_medline_comments_corrections,
-											  parameters)
+				getters.send_medline_comments_corrections(values_medline_comments_corrections[1], values_tot_medline_comments_corrections, parameters)
 			if len(values_tot_medline_data_bank) > 0:
-				getters.send_medline_data_bank(values_medline_data_bank[1], values_tot_medline_data_bank,
-										   parameters)
+				getters.send_medline_data_bank(values_medline_data_bank[1], values_tot_medline_data_bank, parameters)
 			if len(values_tot_medline_grant) > 0:
 				getters.send_medline_grant(values_medline_grant[1], values_tot_medline_grant, parameters)
 			if len(values_tot_medline_investigator) > 0:
-				getters.send_medline_investigator(values_medline_investigator[1],
-											  values_tot_medline_investigator, parameters)
+				getters.send_medline_investigator(values_medline_investigator[1], values_tot_medline_investigator, parameters)
 			if len(values_tot_medline_mesh_heading) > 0:
-				getters.send_medline_mesh_heading(values_medline_mesh_heading[1],
-											  values_tot_medline_mesh_heading, parameters)
+				getters.send_medline_mesh_heading(values_medline_mesh_heading[1], values_tot_medline_mesh_heading, parameters)
 			if len(values_tot_medline_personal_name_subject) > 0:
-				getters.send_medline_personal_name_subject(values_medline_personal_name_subject[1],
-													   values_tot_medline_personal_name_subject,
-													   parameters)
+				getters.send_medline_personal_name_subject(values_medline_personal_name_subject[1], values_tot_medline_personal_name_subject, parameters)
+
 			values_tot_medline_citation = []
 			values_tot_medline_article_language = []
 			values_tot_medline_article_publication_type = []
@@ -242,7 +208,7 @@ def parallelize(file_to_download):
 			values_tot_medline_personal_name_subject = []
 
 			MEDOC.remove(file_name=file_to_download)  # Remove file and add file_name to a list to ignore this file next time
-			logging.info('Total time for file {}: {} min\n'.format(file_to_download, round((time.time() - start_time) / 60, 2)))
+			logging.info('Processed: {} ({} min).'.format(file_to_download, round((time.time() - start_time) / 60, 2)))
 
 			#  Flush RAM
 			del articles
@@ -259,7 +225,6 @@ def parallelize(file_to_download):
 			del values_tot_medline_investigator
 			del values_tot_medline_mesh_heading
 			del values_tot_medline_personal_name_subject
-
 
 
 if __name__ == '__main__':

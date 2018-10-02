@@ -58,7 +58,7 @@ class MEDOC(object):
 			cursor.execute('SHOW TABLES ;')
 
 		else:
-			cursor.execute('CREATE DATABASE {} ;'.format(wished_schema_name)
+			cursor.execute('CREATE DATABASE {} ;'.format(wished_schema_name))
 			cursor.execute('USE {} ;'.format(wished_schema_name))
 
 			for command in open(self.parameters['database']['path_to_sql'], 'r'):
@@ -90,6 +90,7 @@ class MEDOC(object):
 		for file_name in file_list:
 			if re.match(self.regex_gz, file_name) is not None:
 				gz_baseline.append('baseline/' + file_name)
+		logging.info('BASELINE: {} files'.format(len(gz_baseline)))
 
 		gz_update = []  # Updates
 		ftp_ncbi.cwd('/pubmed/updatefiles/')
@@ -98,7 +99,7 @@ class MEDOC(object):
 		for file_name in file_list:
 			if re.match(self.regex_gz, file_name) is not None:
 				gz_update.append('updatefiles/' + file_name)
-		print('{} files in Medline\'s updates'.format(len(gz_update)))
+		logging.info('UPDATE: {} files'.format(len(gz_update)))
 
 		inserted_log = open(self.insert_log_path, 'r')  # Insert only once
 		inserted_list = []
@@ -122,7 +123,7 @@ class MEDOC(object):
 		ftp_ncbi.login()
 		file_name_dir = re.findall('(.*)/(.*)', file_name)
 		ftp_ncbi.cwd('/pubmed/' + str(file_name_dir[0][0]))
-		with open(file_name_dir[0][1], 'wb'):
+		with open(file_name_dir[0][1], 'wb') as file_handle:
 			ftp_ncbi.retrbinary('RETR {}'.format(file_name_dir[0][1]), file_handle.write)
 			os.chdir(self.parameters['paths']['program_path'])
 		return file_name_dir[0][1]
