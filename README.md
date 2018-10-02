@@ -84,27 +84,27 @@ Simply run the following command from the MEDOC folder.
 Before you can run the code, you should first create a _configuration.cfg_ file and customize it according to your 
 environment. Below is the dist.config:
 
-# ================================ GLOBAL =============================================
-[informations]
-version: 1.2.2
-author: emeric.dynomant@omictools.com
-
-# =========================== MYSQL ============================================
-[database]
-path_to_sql: ./utils/database_creation.sql
-user: YOUR_SQL_USER
-password: YOUR_SQL_PWD
-host: YOUR_SQL_HOST
-port: YOUR_SQL_PORT
-database: pubmed
-insert_command_limit: 750
-
-# =========================== PATH ============================================
-[paths]
-program_path: /home/emeric/1_Github/MEDOC
-pubmed_data_download: ./pudmed_data/
-sql_error_log: ./log/errors.log
-already_downloaded_files: ./log/inserted.log
+	# ================================ GLOBAL =============================================
+	[informations]
+	version: 1.2.2
+	author: emeric.dynomant@omictools.com
+	
+	# =========================== MYSQL ============================================
+	[database]
+	path_to_sql: ./utils/database_creation.sql
+	user: YOUR_SQL_USER
+	password: YOUR_SQL_PWD
+	host: YOUR_SQL_HOST
+	port: YOUR_SQL_PORT
+	database: pubmed
+	insert_command_limit: 750
+	
+	# =========================== PATH ============================================
+	[paths]
+	program_path: /home/emeric/1_Github/MEDOC
+	pubmed_data_download: ./pudmed_data/
+	sql_error_log: ./log/errors.log
+	already_downloaded_files: ./log/inserted.log
 
 Plus, if you have already a user to access the DB you wish to create you can change the `schema` file to reflect that.
 You can change the DB_USER and the DB_PASSWORD fields with the following command.
