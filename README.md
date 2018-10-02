@@ -6,6 +6,13 @@ More information about MEDOC on OMICTools website or on MEDOC's publication on a
 
 * https://omictools.com/medline-downloading-contrivance-tool
 
+*************
+*************
+
+__WATCH OUT__: MEDOC is now starting in parallelized mode on the __master__ branch. Switch on the branch __sequential_version__ if you have less than 30Go of RAM or a single-code CPU. Or try to lower a lot the _insert_command_limit_ parameter.
+
+*************
+*************
 
 ## About MEDOC
 
@@ -58,10 +65,10 @@ Thus, run the file *SETUP.py*
 
 This script will:
 
-* Check for pip3 and give command to install it
-* Check for Cython and give command to install it
-* Check for pymysql and give command to install it
-* Check for bs4 and give command to install it
+* Check for _pip3_ and give command to install it
+* Check for _Cython_ and give command to install it
+* Check for _pymysql_ and give command to install it
+* Check for _bs4_ and give command to install it
 
 There's no need to Cythonize functions anymore, they've been optimized.
 
@@ -69,13 +76,6 @@ There's no need to Cythonize functions anymore, they've been optimized.
 Simply run the following command from the MEDOC folder.
 
 	pip3 install -r requirements.txt
-
-	bs4==0.0.1
-	beautifulsoup4==4.6.0
-	Cython==0.27.2
-	html5lib==0.999999999
-	lxml==3.5.0
-	PyMySQL==0.7.11
 
 #### Configuration
 
