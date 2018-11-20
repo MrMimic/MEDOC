@@ -14,7 +14,7 @@
 import os
 import sys
 import logging
-import pymysql.cursors
+import mysql.connector
 
 
 class Query_Executor:
@@ -22,25 +22,33 @@ class Query_Executor:
 
 	def __init__(self, parameters):
 		self.log_file = os.path.join(parameters['paths']['program_path'], parameters['paths']['sql_error_log'])
-		self.connection = pymysql.connect(
-			host=parameters['database']['host'],
-			port=int(parameters['database']['port']),
-			user=parameters['database']['user'],
-			password=parameters['database']['password'],
-			database=parameters['database']['database'],
-			cursorclass=pymysql.cursors.DictCursor,
-			charset='utf8',
-			autocommit=True)
+		
+		self.config = {
+				'host': parameters['database']['host'],
+				'user': parameters['database']['user'],
+				'password': parameters['database']['password'],
+				'database': parameters['database']['database'],
+				'port': int(parameters['database']['port']),
+				'use_pure': True,
+				'raise_on_warnings': True,
+				'get_warnings': True,
+				'autocommit': True
+				}
+		
 
-	def execute(self, sql_command):
-		connection = self.connection
+	def execute(self, sql_command, sql_data):
+		""""""
+
+		connection = mysql.connector.connect(**self.config, buffered=True)
 		cursor = connection.cursor()
-		try:
-			cursor.execute(sql_command)
-			connection.close()
-		except Exception as E:
-			logging.error('Insertion error.')
-			exception = sys.exc_info()[1]
-			errors_log = open(self.log_file, 'a')
-			errors_log.write('{} - {}\n'.format(exception, sql_command))
-			errors_log.close()
+		#~ try:
+		cursor.execute(sql_command, sql_data)
+
+		#~ except Exception as E:
+			#~ logging.error('Insertion error: {}.'.format(E))
+			#~ exception = sys.exc_info()[1]
+			#~ errors_log = open(self.log_file, 'a')
+			#~ errors_log.write('{} - {}\n'.format(exception, sql_command))
+			#~ errors_log.close()
+		cursor.close()
+		connection.close()

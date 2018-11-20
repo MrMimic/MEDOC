@@ -7,6 +7,25 @@ More information about MEDOC on OMICTools website or on MEDOC's publication on a
 * https://omictools.com/medline-downloading-contrivance-tool
 
 *************
+
+# DO NOT PULL MASTER AT THE MOMENT (21/11/2018)
+
+# STABLE SOON.
+
+*************
+Dev cycle:
+
+- RAM issues fixed (streaming indexation of the XML file)
+- medline_info_journal added to the citation table
+- Back to MySQL BD type
+- date_created from table medline_citation now possibly NULL
+- DESC UI from mesh table now not nullable
+
+TODO:
+
+- Add Bibtex
+- add tqdm similar to keras layer training on [file X/Y]  ===>   89articles/899999
+
 *************
 
 __WATCH OUT__: MEDOC is now starting in parallelized mode on the __master__ branch. Switch on the branch __sequential_version__ if you have less than 30Go of RAM or a single-code CPU. Or try to lower a lot the _insert_command_limit_ parameter.

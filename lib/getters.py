@@ -12,6 +12,7 @@
 
 
 import sys
+import logging
 import pymysql.cursors
 from lib.sql_helper import Query_Executor
 
