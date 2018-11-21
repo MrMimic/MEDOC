@@ -19,6 +19,7 @@ import json
 import tqdm
 import pickle
 import logging
+import calendar
 import configparser
 from ftplib import FTP
 import mysql.connector
@@ -35,19 +36,7 @@ class MEDOC(object):
 		self.regex_gz = re.compile('^pubmed.*.xml.gz$')
 		self.insert_log_path = os.path.join(self.parameters['paths']['program_path'], self.parameters['paths']['already_downloaded_files'])
 		self.download_folder = os.path.join(self.parameters['paths']['program_path'], self.parameters['paths']['pubmed_data_download'])
-		#~ r_year = re.compile('<year>([0-9]{4})</year>')
-		#~ r_month = re.compile('<month>([0-9]{2})</month>')
-		#~ r_day = re.compile('<day>([0-9]{2})</day>')
-		#~ try:
-			#~ self.Query_Executor = Query_Executor(parameters=self.parameters)
-		#~ except Exception as E:
-			#~ logging.error(E)
-			#~ self.create_pubmedDB()
-			#~ self.
-
-		print('INIT: date_of_electronic_publication: #### TO WATCH WHEN TRUE table: medline_citation ###'.format())
-		print('INIT: TESTER le remplissage de la table medline_comments_corrections_list ___ ET ___ medline_personal_name_subject __ ET __ medline_investigator __ ET __ medline_grant ___ET___ medline_data_bank et re formatter proprement sans re cette partie')
-
+		self.calendar = {v.lower(): k for k,v in enumerate(calendar.month_abbr) if v != ''}
 
 	def clean_xml(self, string):
 		""""""
@@ -189,16 +178,16 @@ class MEDOC(object):
 			{'medline_citation':
 				{
 					'pmid': pmid_primary_key,
-					'date_created': '{}-{}-{}'.format(soup_article.datecreated.year.text, soup_article.datecreated.month.text, soup_article.datecreated.day.text) if soup_article.datecreated else None,
-					'date_completed': '{}-{}-{}'.format(soup_article.datecompleted.year.text, soup_article.datecompleted.month.text, soup_article.datecompleted.day.text) if soup_article.datecompleted else None,
-					'date_revised': '{}-{}-{}'.format(soup_article.daterevised.year.text, soup_article.daterevised.month.text, soup_article.daterevised.day.text) if soup_article.daterevised else None,
+					'date_created': '{}-{}-{}'.format(soup_article.datecreated.year.text, self.calendar[soup_article.datecreated.month.text.lower()] if re.search('[a-z]', soup_article.datecreated.month.text) else soup_article.datecreated.month.text, soup_article.datecreated.day.text) if soup_article.datecreated else None,
+					'date_completed': '{}-{}-{}'.format(soup_article.datecompleted.year.text, self.calendar[soup_article.datecompleted.month.text.lower()] if re.search('[a-z]', soup_article.datecompleted.month.text) else soup_article.datecompleted.month.text, soup_article.datecompleted.day.text) if soup_article.datecompleted else None,
+					'date_revised': '{}-{}-{}'.format(soup_article.daterevised.year.text, self.calendar[soup_article.daterevised.month.text.lower()] if re.search('[a-z]', soup_article.daterevised.month.text) else soup_article.daterevised.month.text, soup_article.daterevised.day.text) if soup_article.daterevised else None,
 					'issn': soup_article.journal.issn.text if soup_article.journal.issn else None,
 					'volume': soup_article.journal.volume.text if soup_article.journal.volume else None,
 					'issue': soup_article.journal.issue.text if soup_article.journal.issue else None,
 					'pub_date_year': soup_article.pubdate.year.text if soup_article.pubdate.year else None,
 					'pub_date_month': soup_article.pubdate.month.text if soup_article.pubdate.month else None,
 					'pub_date_day': soup_article.pubdate.day.text if soup_article.pubdate.day else None,
-					'medline_date' : '{}-{}-{}'.format(soup_article.pubdate.year.text, soup_article.pubdate.month.text, soup_article.pubdate.day.text) if soup_article.pubdate.year and soup_article.pubdate.month and soup_article.pubdate.day else None,
+					'medline_date' : '{}-{}-{}'.format(soup_article.pubdate.year.text, self.calendar[soup_article.pubdate.month.text.lower()] if re.search('[a-z]', soup_article.pubdate.month.text) else soup_article.pubdate.month.text, soup_article.pubdate.day.text) if soup_article.pubdate.year and soup_article.pubdate.month and soup_article.pubdate.day else None,
 					'journal_title' : soup_article.journal.title.text if soup_article.journal.title else None,
 					'iso_abbreviation': soup_article.journal.isoabbreviation.text if soup_article.journal.isoabbreviation else None,
 					'article_title': soup_article.articletitle.text if soup_article.articletitle else None,
@@ -288,43 +277,40 @@ class MEDOC(object):
 
 		citation_subsets_list = soup_article.find_all('citationsubset')  # medline_citation_subsets
 		for citation_subsets in citation_subsets_list:
-			article_INSERT_list.append(
-				{'medline_citation_subsets':
-					{
-						'pmid': pmid_primary_key,
-						'citation_subset': citation_subsets.text
+			if citation_subsets.text:
+				article_INSERT_list.append(
+					{'medline_citation_subsets':
+						{
+							'pmid': pmid_primary_key,
+							'citation_subset': citation_subsets.text
+						}
 					}
-				}
-			)
-
-
-		# ICI IL FAUT CONTINUER DE TRANSFORMER AVEC LES .TEXT SINON CEST DES LISTES QUI FONT PETER LINSERTION MYSQL
+				)
 
 		medline_comments_corrections_list = soup_article.find_all('commentscorrections')  # medline_comments_corrections
 		for comment in medline_comments_corrections_list:
 			article_INSERT_list.append(
-			#~ print(
 				{'medline_comments_corrections':
 					{
 						'pmid': pmid_primary_key,
-						'ref_pmid': re.findall('<pmid version="1">(\d+)</pmid>', str(comment)),
-						'type': re.findall('<commentscorrections reftype="(.*?)">', str(comment)),
-						'ref_source': re.findall('<refsource>(.*)</refsource>', str(comment))
+						'ref_pmid': comment.pmid.text if comment.pmid else None,
+						'type': comment.commentscorrections['reftype'] if comment.commentscorrections else None,
+						'ref_source': comment.refsource.text if comment.refsource else None
 					}
 				 }
 			)
 
 		medline_data_bank_list = soup_article.find_all('accessionnumber')  # medline_data_bank
 		for databank in medline_data_bank_list:
-			article_INSERT_list.append(
-			#~ print(
-				{'medline_data_bank':
-					{
-						'pmid': pmid_primary_key,
-						'accession_number': re.findall('<accessionnumber>(.*)</accessionnumber>', str(databank))
+			if databank.accessionnumber:
+				article_INSERT_list.append(
+					{'medline_data_bank':
+						{
+							'pmid': pmid_primary_key,
+							'accession_number': databank.accessionnumber.text if databank.accessionnumber else None
+						}
 					}
-				}
-			)
+				)
 
 		medline_grant_list = soup_article.find_all('grant')  # medline_grant
 		for grant in medline_grant_list:
@@ -332,10 +318,10 @@ class MEDOC(object):
 				{'medline_grant':
 					{
 						'pmid': pmid_primary_key,
-						'grant_id': re.findall('<grantid>(.*)</grantid>', str(grant)),
-						'acronym': re.findall('<acronym>(.*)</acronym>', str(grant)),
-						'agency': re.findall('<agency>(.*)</agency>', str(grant)),
-						'country': re.findall('<country>(.*)</country>', str(grant))
+						'grant_id': grant.grantid.text if grant.grantid else None,
+						'acronym': grant.acronym.text if grant.acronym else None,
+						'agency': grant.agency.text if grant.agency else None,
+						'country': grant.country.text if grant.country else None
 					}
 				}
 			)
@@ -362,13 +348,13 @@ class MEDOC(object):
 				{'medline_investigator':
 					{
 						'pmid': pmid_primary_key,
-						'last_name': re.findall('<lastname>(.*)</lastname>', str(investigator)),
-						'fore_name': re.findall('<forename>(.*)</forename>', str(investigator)),
-						'first_name': re.findall('<firstname>(.*)</firstname>', str(investigator)),
-						'middle_name': re.findall('<middlename>(.*)</middlename>', str(investigator)),
-						'initials': re.findall('<initials>(.*)</initials>', str(investigator)),
-						'suffix': re.findall('<suffix>(.*)</suffix>', str(investigator)),
-						'affiliation': re.findall('<affiliation>(.*)</affiliation>', str(investigator))
+						'last_name': investigator.lastname.text if investigator.lastname else None,
+						'fore_name': investigator.forename.text if investigator.forename else None,
+						'first_name': investigator.firstname.text if investigator.firstname else None,
+						'middle_name': investigator.middlename.text if investigator.middlename else None,
+						'initials': investigator.initials.text if investigator.initials else None,
+						'suffix': investigator.suffix.text if investigator.suffix else None,
+						'affiliation': investigator.affiliation.text if investigator.affiliation else None
 					}
 				}
 			)
@@ -379,33 +365,31 @@ class MEDOC(object):
 				{'medline_personal_name_subject':
 					{
 						'pmid': pmid_primary_key,
-						'last_name': re.findall('<lastname>(.*)</lastname>', str(subject)),
-						'fore_name': re.findall('<forename>(.*)</forename>', str(subject)),
-						'first_name': re.findall('<firstname>(.*)</firstname>', str(subject)),
-						'middle_name': re.findall('<middlename>(.*)</middlename>', str(subject)),
-						'initials': re.findall('<initials>(.*)</initials>', str(subject)),
-						'suffix': re.findall('<suffix>(.*)</suffix>', str(subject))
+						'last_name': subject.lastname.text if subject.lastname else None,
+						'fore_name': subject.forename.text if subject.forename else None,
+						'first_name': subject.firstname.text if subject.firstname else None,
+						'middle_name': subject.middlename.text if subject.middlename else None,
+						'initials': subject.initials.text if subject.initials else None,
+						'suffix': subject.suffix.text if subject.suffix else None
 					}
 				}
 			)
 
 		return article_INSERT_list
 
-	def parallelized_insertion(self, insert_data):
-		""""""
-		QueryExecutor = Query_Executor(parameters=self.parameters)
-		for table, data in insert_data.items():
-			sql_command = "INSERT INTO {} ({}) VALUES ({}) ;".format(
-				table,
-				', '.join([key for key in data.keys()]),
-				', '.join(['%({})s'.format(key) for key in data.keys()])
-			)
-			QueryExecutor.execute(sql_command=sql_command, sql_data=data)
-
 	def insert_data(self, data, gz):
 		"""Each insertion step is parallelized"""
-		with mp.Pool(processes=4) as pool:  # Parallelize
-			pool.map(self.parallelized_insertion, data)
+		tst = time.time()
+		QueryExecutor = Query_Executor(parameters=self.parameters)
+		for chunk in data:
+			for table, data in chunk.items():
+				sql_command = 'INSERT INTO {} ({}) VALUES ({}) ;'.format(
+					table,
+					', '.join([key for key in data.keys()]),
+					', '.join(['%({})s'.format(key) for key in data.keys()])
+				)
+				QueryExecutor.execute(sql_command=sql_command, sql_data=data)
+		tsp = time.time()
 
 	def remove(self, file_name):
 		"""REMOVE FILE AND WRITE ITS NAME ON ALREADY DONE LOG"""

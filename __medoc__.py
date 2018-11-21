@@ -22,13 +22,9 @@ import configparser
 import multiprocessing as mp
 from bs4 import BeautifulSoup
 
-
 sys.path.append('./lib')
-import MEDOC
-import getters
-
-
-
+import lib.MEDOC
+import lib.getters
 
 def parallelize(file_to_download):
 
@@ -70,10 +66,6 @@ if __name__ == '__main__':
 	MEDOC.create_pubmedDB()  # Create database if not exist
 	gz_file_list = MEDOC.get_file_list()  # Get file list on NCBI
 
-	for file_name in gz_file_list:
-		confirmation = parallelize(file_name)
-
-	#~ with mp.Pool(processes=1) as pool:  # Parallelize
-		#~ pool.map(parallelize, gz_file_list)
-		#~ pool.join()
-	#~ pool.close()
+	with mp.Pool(processes=int(parameters['threads']['parallel_files'])) as pool:  # Parallelize
+		pool.map(parallelize, gz_file_list)
+		pool.join()

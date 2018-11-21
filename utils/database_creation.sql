@@ -22,25 +22,25 @@
 #==============================================================
 # TABLE: medline_citation 
 #==============================================================
-CREATE TABLE medline_citation (pmid INTEGER NOT NULL, date_created DATE, date_completed DATE, date_revised DATE, issn CHAR(9), volume VARCHAR(100), issue VARCHAR(100), pub_date_year VARCHAR(4), pub_date_month VARCHAR(20), pub_date_day VARCHAR(3), medline_date VARCHAR(100), journal_title VARCHAR(2000), iso_abbreviation VARCHAR(100), article_title VARCHAR(1000) NOT NULL, medline_pgn VARCHAR(100), abstract_text TEXT, copyright_info VARCHAR(1100), article_author_list_comp_yn CHAR(3), data_bank_list_comp_yn CHAR(3), grantlist_complete_yn CHAR(3), vernacular_title VARCHAR(1000), date_of_electronic_publication DATE, country VARCHAR(50), medline_ta VARCHAR(500), nlm_unique_id VARCHAR(20), xml_file_name VARCHAR(500) NOT NULL, number_of_references VARCHAR(10), citation_owner VARCHAR(30), citation_status VARCHAR(50), medline_info_journal VARCHAR(100), PRIMARY KEY (pmid)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE TABLE medline_citation (pmid INTEGER NOT NULL, date_created DATE, date_completed DATE, date_revised DATE, issn CHAR(9), volume VARCHAR(100), issue VARCHAR(100), pub_date_year YEAR, pub_date_month VARCHAR(10), pub_date_day INT(2), medline_date DATE, journal_title VARCHAR(2000), iso_abbreviation VARCHAR(100), article_title VARCHAR(1000), medline_pgn VARCHAR(100), abstract_text TEXT, copyright_info VARCHAR(1100), article_author_list_comp_yn CHAR(3), data_bank_list_comp_yn CHAR(3), grantlist_complete_yn CHAR(3), vernacular_title VARCHAR(1000), date_of_electronic_publication DATE, country VARCHAR(50), medline_ta VARCHAR(500), nlm_unique_id VARCHAR(20), xml_file_name VARCHAR(500) NOT NULL, number_of_references INT(10), citation_owner VARCHAR(30), citation_status VARCHAR(50), medline_info_journal VARCHAR(100), PRIMARY KEY (pmid)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 CREATE INDEX pk_med_citation on medline_citation(pmid, pub_date_year, journal_title(255), country);
 
 #==============================================================
 # TABLE: medline_author
 #==============================================================
-CREATE TABLE medline_author (pmid INTEGER NOT NULL, last_name VARCHAR(500), fore_name VARCHAR(50), first_name VARCHAR(50), middle_name VARCHAR(50), initials VARCHAR(30), suffix VARCHAR(10), affiliation TEXT, collective_name VARCHAR(500)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE TABLE medline_author (pmid INTEGER NOT NULL, last_name VARCHAR(500), fore_name VARCHAR(50), first_name VARCHAR(50), middle_name VARCHAR(50), initials VARCHAR(10), suffix VARCHAR(10), affiliation TEXT, collective_name VARCHAR(500)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 CREATE INDEX idx_author on medline_author(pmid, affiliation(255));
 
 #==============================================================
 # TABLE: medline_chemical_list
 #==============================================================
-CREATE TABLE medline_chemical_list (pmid INTEGER NOT NULL, registry_number VARCHAR(20), name_of_substance VARCHAR(2000) NOT NULL) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE TABLE medline_chemical_list (pmid INTEGER NOT NULL, registry_number VARCHAR(20), name_of_substance VARCHAR(2000)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 CREATE INDEX idx_m_chem on medline_chemical_list(pmid, name_of_substance(255));
 
 #==============================================================
 # TABLE: medline_mesh_heading 
 #==============================================================
-CREATE TABLE medline_mesh_heading(pmid INTEGER NOT NULL, descriptor_name VARCHAR(500) NOT NULL, descriptor_ui VARCHAR(100) NOT NULL, descriptor_name_major_yn CHAR(3), qualifier_name VARCHAR(50), qualifier_ui VARCHAR(100), qualifier_name_major_yn CHAR(3)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE TABLE medline_mesh_heading(pmid INTEGER NOT NULL, descriptor_name VARCHAR(500) NOT NULL, descriptor_ui VARCHAR(20) NOT NULL, descriptor_name_major_yn CHAR(2), qualifier_name VARCHAR(50), qualifier_ui VARCHAR(100), qualifier_name_major_yn CHAR(2)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 CREATE INDEX pk_med_meshheading on medline_mesh_heading(pmid, descriptor_name, qualifier_name);
 
 #==============================================================
@@ -58,7 +58,7 @@ CREATE INDEX pk_med_cit_sub on medline_citation_subsets(pmid, citation_subset);
 #==============================================================
 # TABLE: medline_article_publication_type 
 #==============================================================
-CREATE TABLE medline_article_publication_type( pmid INTEGER NOT NULL, publication_type VARCHAR(100)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE TABLE medline_article_publication_type( pmid INTEGER NOT NULL, publication_type VARCHAR(1000)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 CREATE INDEX idx_pub_type_pmid on medline_article_publication_type(pmid);
 
 #==============================================================
@@ -70,7 +70,7 @@ CREATE INDEX idx_lang on medline_article_language(pmid, language);
 #==============================================================
 # TABLE: medline_grant 
 #==============================================================
-CREATE TABLE medline_grant(pmid INTEGER NOT NULL, grant_id VARCHAR(100) NOT NULL, acronym VARCHAR(100), agency VARCHAR(500), country VARCHAR(500)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE TABLE medline_grant(pmid INTEGER NOT NULL, grant_id VARCHAR(100), acronym VARCHAR(100), agency VARCHAR(500), country VARCHAR(100)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 CREATE INDEX pk_medline_grant on medline_grant(pmid, grant_id, country);
 
 #==============================================================
