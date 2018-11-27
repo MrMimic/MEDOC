@@ -18,10 +18,10 @@ except:
 	print('sudo pip3 install -U Cython')
 	
 try:
-	import pymysql
-	print('pymysql already installed')
+	import mysql.connector
+	print('mysql.connector already installed')
 except:
-	print('sudo pip3 install -U pymysql')
+	print('sudo pip3 install -U mysql-connector-python')
 	
 try:
 	import bs4

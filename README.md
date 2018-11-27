@@ -1,45 +1,30 @@
 # MEDOC (MEdline DOwnloading Contrivance)
 
-More information about MEDOC on OMICTools website or on MEDOC's publication on arXiv.org:
+## Citing MEDOC
 
-* https://arxiv.org/abs/1710.06590
-
-* https://omictools.com/medline-downloading-contrivance-tool
-
-*************
-
-# DO NOT PULL MASTER AT THE MOMENT (21/11/2018)
-
-# STABLE SOON.
-
-*************
-Dev cycle:
-
-- RAM issues fixed (streaming indexation of the XML file)
-- medline_info_journal added to the citation table
-- Back to MySQL BD type
-- date_created from table medline_citation now possibly NULL
-- DESC UI from mesh table now not nullable
-
-TODO:
-
-- Add Bibtex
-- add tqdm similar to keras layer training on [file X/Y]  ===>   89articles/899999
-
-*************
-
-__WATCH OUT__: MEDOC is now starting in parallelized mode on the __master__ branch. Switch on the branch __sequential_version__ if you have less than 30Go of RAM or a single-code CPU. Or try to lower a lot the _insert_command_limit_ parameter.
-
-__PS__: Flake-8 formated code with 85 chars / line is ugly. Please avoid PyCharm to format it before pulling a merge request.
-
-*************
-*************
+	@article{dynomant2017medoc,
+	  title={MEDOC: a Python wrapper to load MEDLINE into a local MySQL database},
+	  author={Dynomant, Emeric and Gorieu, Mathilde and Perrin, Helene and Denorme, Marion and Pichon, Fabien and Desfeux, Arnaud},
+	  journal={arXiv preprint arXiv:1710.06590},
+	  year={2017}
+	}
 
 ## About MEDOC
 
 ### Development
 
 Thanks to [rafspiny](https://github.com/rafspiny) for his multiple corrections and feedback !
+
+### V1.3.0
+
+MEDOC had multiple changes. The most important is about the XML parsing, which should return less errors than before. The way the data is parsed has been improved.
+
+Then, the stacking of the SQL INSERT() has been removed. Files are now process in parallel by many threads and inserted during this streaming of the file.
+
+I now assume that it is easy and cheap to get a decent multi-thread machine for 24h of processing (AWS, GoogleCloud, MAzure ...) with a decent amount of RAM.
+
+MEDOC has been tested on a 144 cores XEON E7 with 500Go of RAM. If your want the old version, please clone the sequential branch.
+
 
 ### What is MEDLINE?
 
@@ -77,82 +62,49 @@ You may also need `python-dev`. You can also install it with the same command:
 
 #### Installation
 
-The second step is to install external dependencies and to cythonize python functions.
+The second step is to install external dependencies. First, create a virtual environment:
 
-Thus, run the file *SETUP.py*
+	pip3 install virtualenv
+	virtualenv VENV -p /usr/bin/python3
 
-	cd /path/to/MEDOC
-	python3 utils/SETUP.py build_ext --inplace
+Or assign to the _-p_ argument any path to a valid python3 interpreter. Then, simply run the following commands:
 
-This script will:
-
-* Check for _pip3_ and give command to install it
-* Check for _Cython_ and give command to install it
-* Check for _pymysql_ and give command to install it
-* Check for _bs4_ and give command to install it
-
-There's no need to Cythonize functions anymore, they've been optimized.
-
-**Alternatively** you can exploit the requirements.txt file shipped with the project.
-Simply run the following command from the MEDOC folder.
-
+	source VENV/bin/activate
 	pip3 install -r requirements.txt
+
+Avery libraries will now be installed into this environment.
 
 #### Configuration
 
-Before you can run the code, you should first create a _configuration.cfg_ file and customize it according to your 
-environment. Below is the dist.config:
-
-
+Before you can run the code, you should first create a _configuration.cfg_ file (in the MEDOC folder) and customize it according to your environment. Below is the dist.config:
 
 	# ================================ GLOBAL =============================================
 	[informations]
-	version: 1.2.2
-	author: emeric.dynomant@omictools.com
-	
+	version: 1.3.0
+	author: emeric.dynomant@gmail.com
+
 	# =========================== MYSQL ============================================
 	[database]
 	path_to_sql: ./utils/database_creation.sql
-	user: MYSQL_USER
-	password: MYSQL_PWD
-	host: MYSQL_HOST
-	port: MYSQL_PORT
+	user: <YOUR_SQL_USER>
+	password: <YOUR_SQL_PASSWORD>
+	host: <YOUR_SQL_HOST>
+	port: <YOUR_SQL_PORT>
 	database: pubmed
-	insert_command_limit: 250
-	
+
 	# =========================== PATH ============================================
 	[paths]
-	program_path: /home/emeric/1_Github/MEDOC
+	program_path: ./
 	pubmed_data_download: ./pudmed_data/
 	sql_error_log: ./log/errors.log
 	already_downloaded_files: ./log/inserted.log
-	
+
 	# =========================== PARALLELISM ============================================
-	
+
 	[threads]
-	parallel_files: 1
-	parallel_insertions: 10
-
-
-Plus, if you have already a user to access the DB you wish to create you can change the `schema` file to reflect that.
-You can change the DB_USER and the DB_PASSWORD fields with the following command.
-Suppose your credentials are: my_custom_user/my_secret_password
-
-```bash
-export MEDOC_SQL_FILE='./utils/database_creation.sql'
-sed -i'' -e "s/\bDB_USER\b/my_custom_user/g" $MEDOC_SQL_FILE
-sed -i'' -e "s/\bDB_PASSWORD\b/my_secret_password/g" $MEDOC_SQL_FILE
-```
-
-NOTE: If python3 is your default, you do not need to specify `python3` or `pip3` but just use `python` and `pip`.
+	parallel_files: 10
 
 ### Launch the programm
-
-Open file 'parameters.json' and change complete path value including your /home/xxx/...
-
-If your computer has 16Go or more of RAM, you can set '_insert_command_limit_' to '1000' of greater.
-
-Leave database name to '_pubmed_' but change the mySQL password to yours.
 
 Then, simply execute :
 
@@ -163,16 +115,16 @@ Then, simply execute :
 
 __Program stop running because of 'Segmentation fault (core dumped)'__
 
-Indexing a file with 30K article take some time and RAM (if you know other parser than LXML, more RAM-frieldy, do a PR). Try to open the function _/lib_medline/python_functions/E_parse_xml.py_ and go to the line:
+Indexing a file with 30K article take some time and RAM (if you know other parser than LXML, more RAM-frieldy, do a PR). Try to open the function _extract_articles_ in the lib/MEDOC.py file and go to the line:
 
-	soup = BeautifulSoup(file_content, 'lxml')
+	soup = BeautifulSoup(file_handler.read(), 'lxml')
 
-Change '_lxml_' to '_html-parser_' and re-launch SETUP.py.
+Change _lxml_ to _html-parser_ and re-start MEDOC.
 
-Or simply try to lower the '_insert_command_limit_' parameter, to insert values more often in the database, thus saving RAM usage.
+Or simply try to lower the number of thread in the configuration file.
 
 
-__SQL insertions are taking really a lot of time (more than 15min / file)'__
+__SQL insertions are taking really a lot of time__
 
 Recreate the SQL database after dropping it, by running the following command:
 
