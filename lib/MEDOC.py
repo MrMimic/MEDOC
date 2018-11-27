@@ -138,7 +138,7 @@ class MEDOC(object):
 		"""GZ EXTRACTION AND INDEXATION"""
 		tst = time.time()
 		with gzip.open(os.path.join(self.download_folder, file_name), 'rt', encoding='utf-8') as file_handler:  # Streaming file
-			soup = BeautifulSoup(file_handler.read(), 'lxml')  # Indexing XML
+			soup = BeautifulSoup(file_handler.read(), 'xml')  # Indexing XML
 		articles = soup.find_all('pubmedarticle')  # Get data
 		tsp = time.time()
 		logging.info('Parsing {} articles ({} min)'.format(len(articles), round((tsp - tst) / 60, 2)))
