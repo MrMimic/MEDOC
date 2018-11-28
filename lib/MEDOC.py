@@ -139,7 +139,7 @@ class MEDOC(object):
 		tst = time.time()
 		with gzip.open(os.path.join(self.download_folder, file_name), 'rt', encoding='utf-8') as file_handler:  # Streaming file
 			soup = BeautifulSoup(file_handler.read(), 'xml')  # Indexing XML
-		articles = soup.find_all('pubmedarticle')  # Get data
+		articles = soup.find_all('PubmedArticle')  # Get data
 		tsp = time.time()
 		logging.info('Parsing {} articles ({} min)'.format(len(articles), round((tsp - tst) / 60, 2)))
 		return articles
@@ -157,12 +157,9 @@ class MEDOC(object):
 			return None
 
 		# Abstract
-		abstract_text_list = re.findall('<abstracttext.*?>(.*?)</abstracttext>', str(article))
-		try:
-			abstract_text = ''.join([re.sub('\"', ' ', str(abstract)) for abstract in abstract_text_list]) if len(abstract_text_list) > 1 else abstract_text_list[0]
-		except IndexError:
-			abstract_text = None
+		abstract_text = ''.join(soup_article.abstract.text.splitlines()) if soup_article.abstract else None
 
+		# Medline date
 		try:
 			medline_date = '{}-{}-{}'.format(soup_article.pubdate.year.text, self.calendar[soup_article.pubdate.month.text.lower()] if soup_article.pubdate.month and re.search('[a-z]', soup_article.pubdate.month.text) else soup_article.pubdate.month.text, soup_article.pubdate.day.text) if soup_article.pubdate and soup_article.pubdate.year is not None and soup_article.pubdate.month is not None and soup_article.pubdate.day is not None else None
 		except AttributeError:
