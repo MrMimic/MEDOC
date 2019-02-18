@@ -110,19 +110,9 @@ Then, simply execute :
 
 	python3 __execution__.py 
 
+It took 26H to insert 29,058,362 articles with a XEON E7. Among them, 420 insert command generated an error, aminly due to under-sized mySQL columns.
 
 ## Issues
-
-__Program stop running because of 'Segmentation fault (core dumped)'__
-
-Indexing a file with 30K article take some time and RAM (if you know other parser than LXML, more RAM-frieldy, do a PR). Try to open the function _extract_articles_ in the lib/MEDOC.py file and go to the line:
-
-	soup = BeautifulSoup(file_handler.read(), 'lxml')
-
-Change _lxml_ to _html-parser_ and re-start MEDOC.
-
-Or simply try to lower the number of thread in the configuration file.
-
 
 __SQL insertions are taking really a lot of time__
 
