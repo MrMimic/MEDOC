@@ -4,4 +4,4 @@ configparser==3.5.0
 Cython==0.27.2
 html5lib==0.999999999
 lxml==4.6.5
-mysql-connector-python==0.7.11
+mysql-connector-python>=0.7.11

@@ -54,23 +54,31 @@ Here prerequisites and installation procedures will be discussed.
 
 XML parsing libraries may be needed. You can install them on any Debian-derived system with:
 
+```bash
 	sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+```
 
 You may also need `python-dev`. You can also install it with the same command:
 
+```bash
 	sudo apt-get install python-dev
+```
 
 #### Installation
 
-The second step is to install external dependencies. First, create a virtual environment:
+The second step is to install external dependencies. First, create a virtual environment and load it:
 
-	pip3 install virtualenv
-	virtualenv VENV -p /usr/bin/python3
+```bash
+	python3 -m venv .venv
+	source .venv/bin/activate
+```
 
-Or assign to the _-p_ argument any path to a valid python3 interpreter. Then, simply run the following commands:
+Then, simply run the following commands:
 
-	source VENV/bin/activate
-	pip3 install -r requirements.txt
+```bash
+	python3 -m pip install --upgrade pip
+	python3 -m pip install -r requirements.txt
+```
 
 Avery libraries will now be installed into this environment.
 
@@ -78,6 +86,7 @@ Avery libraries will now be installed into this environment.
 
 Before you can run the code, you should first create a _configuration.cfg_ file (in the MEDOC folder) and customize it according to your environment. Below is the dist.config:
 
+```yaml
 	# ================================ GLOBAL =============================================
 	[informations]
 	version: 1.3.0
@@ -103,18 +112,19 @@ Before you can run the code, you should first create a _configuration.cfg_ file 
 
 	[threads]
 	parallel_files: 10
+```
 
 ### Launch the programm
 
 Then, simply execute :
 
-	python3 __execution__.py 
+	python3 medoc.py 
 
 It took 26H to insert 29,058,362 articles with a XEON E7. Among them, 420 insert command generated an error, aminly due to under-sized mySQL columns.
 
 ## Issues
 
-__SQL insertions are taking really a lot of time__
+### SQL insertions are taking really a lot of time
 
 Recreate the SQL database after dropping it, by running the following command:
 
@@ -124,11 +134,10 @@ Then, comment every line about indexes (_CREATE INDEX_) or foreigns keys (_ALTER
 
 When the database is full, launch the indexes and alter commands once at a time.
 
-__Problem installing lxml__
+### Problem installing lxml
 
 Make sure you have all the right dependencies installed
 
 On Debian based machines try running:
 
 	sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev
-

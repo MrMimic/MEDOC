@@ -70,7 +70,6 @@ if __name__ == '__main__':
     MEDOC = MEDOC.MEDOC()
     parameters = configparser.ConfigParser()
     parameters.read('./configuration.cfg')
-    insert_limit = int(parameters['database']['insert_command_limit'])
     insert_log_path = os.path.join(
         parameters['paths']['program_path'],
         parameters['paths']['already_downloaded_files'])
