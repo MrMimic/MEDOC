@@ -90,7 +90,6 @@ Before you can run the code, you should first create a _configuration.cfg_ file 
 	# ================================ GLOBAL =============================================
 	[informations]
 	version: 1.3.0
-	author: emeric.dynomant@gmail.com
 
 	# =========================== MYSQL ============================================
 	[database]
